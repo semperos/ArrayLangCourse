@@ -3,7 +3,7 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
-  
+
 permissions: write-all
 
 jobs:
@@ -19,5 +19,4 @@ jobs:
         # Or use mhausenblas/mkdocs-deploy-gh-pages@nomaterial to build without the mkdocs-material theme
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CUSTOM_DOMAIN: course.dyalog.com
           REQUIREMENTS: CI/requirements.txt
