@@ -12,7 +12,7 @@ J has two-argument, infix verbs. These are called <dfn>dyadic</dfn> verbs.
 15
 ```
 ---
-```APL
+```J
    3 - 5
 ```
 ```
@@ -56,7 +56,7 @@ Some symbols represent both a monadic and a dyadic verb, but these are often clo
 
 **:bulb: Try this**: Use these verbs monadically and dyadically:
 
-<div class="center language-APL" markdown="span">
+<div class="center language-J" markdown="span">
 <div class="displayBox" markdown="span">
 <a class="glyph" title="Conjugate/Plus">`+`</a>
 <a class="glyph" title="Negate/Minus">`-`</a>
@@ -222,7 +222,7 @@ but this can lead to some surprises if we are not aware:
 	```
 	
 	Finally there is another addition. The overall evaluation looks like the following:
-	```APL
+	```J
 	   2 + 2 2 + 2
 	   2 + 4 4
 	   6 6
@@ -278,7 +278,7 @@ The index generator `i. y` generates integers up to the integer right argument `
 
 So we can do an arithmetic sum as follows
 
-|**Traditional Mathematical Notation (TMN)** | **APL** |
+|**Traditional Mathematical Notation (TMN)** | **J** |
 |---|---|
 | $\sum_{n=1}^N n$ | `+/i.N`
 
@@ -286,7 +286,7 @@ So we can do an arithmetic sum as follows
 
 In the APL and BQN versions of this lesson, a negative number passed as the right argument to the index generator function produces an error. How can an item in an array have a negative index?
 
-In J, `i. y` is generalized to produce an array of numbers monotonically increasing starting at `y`:
+In J, `i. y` treats a negative `y` as a signal to reverse the order of the indices produced:
 
 ```J
    i._4
@@ -295,35 +295,35 @@ In J, `i. y` is generalized to produce an array of numbers monotonically increas
 3 2 1 0
 ```
 
-The `DOMAIN ERROR` means that APL cannot compute what you are asking for. In this case, it cannot generate indices up to a negative number. Negative numbers are <em>outside the domain</em> of the index generator verb. How might you [generate integers from 1 to negative four](./dfns-and-assignment.md#problem-set-2)?
+Here's another error you might encounter:
 
-```APL
+```J
    1+
-SYNTAX ERROR: Missing right argument
-   1+
-    ∧
+```
+|syntax error
+|       1+
+|[-0] 
 ```
 
-A `SYNTAX ERROR` means that the expression which you tried to execute does not make sense. In the case above, it is because verbs always either take a single argument to their right or two arguments, one to the right and one to the left. verbs never take a single argument to their left.
+A `syntax error` means that the expression which you tried to execute does not make sense. In the case above, it is because verbs always either take a single argument to their right or two arguments, one to the right and one to the left. Verbs never take a single argument to their left.
 
-```APL
+```J
    a
-VALUE ERROR: Undefined name: a
-   a
-   ∧
+|value error: a
+|[-0]
 ```
 
-A `VALUE ERROR` means that there is nothing associated with the name provided. We have not seen any named verbs or variables yet; nothing has been assigned to the name `a`, so trying to use it in an expression is meaningless.
+A `value error` means that there is nothing associated with the name provided. We have not seen any named verbs or variables yet; nothing has been assigned to the name `a`, so trying to use it in an expression is meaningless.
 
 ## Problem Set 1
 1.   
 	The average daily temperatures, in degrees Celcius, for 7 days are stored in a variable `t_allweek`.
 	
-	```APL
-	t_allweek ← 11.7 8.6 9.7 14.2 6.7 11.8 9.2
+	```J
+	t_allweek =: 11.7 8.6 9.7 14.2 6.7 11.8 9.2
 	```
 	
-	Use APL to compute the follwing:
+	Use J to compute the follwing:
 	
 	1. The highest daily temperature
 	1. The lowest daily temperature
@@ -333,42 +333,42 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 	??? Example "Answers"
 		<ol type="a">
 		<li>
-		```APL
-		   ⌈/t_allweek
+		```J
+		   >./t_allweek
 		14.2
 		```
 		</li>
 		<li>
-		```APL
-		   ⌊/t_allweek
+		```J
+		   <./t_allweek
 		6.7
 		```
 		</li>
 		<li>
-		```APL
-		   (⌈/t_allweek)-⌊/t_allweek
+		```J
+		   (>./t_allweek)-<./t_allweek
 		7.5
 		```
 		
 		> You may have found the correct answer using the following expression:
-		```APL
-		   ⌈/t_allweek-⌊/t_allweek
+		```J
+		   >./t_allweek-<./t_allweek
 		7.5
 		```
 		
 		> but this is less efficient because it does more subtractions than it needs to. Recall the right-to-left evaluation:
-		```APL
-		   ⌈/   t_allweek           - ⌊/ t_allweek
-		   ⌈/   t_allweek           - 6.7
-		   ⌈/ 11.7 8.6 9.7 14.2 6.7 11.8 9.2 - 6.7
-		   ⌈/ 5 1.9 3 7.5 0 5.1 2.5
+		```J
+		   >./   t_allweek           - <./ t_allweek
+		   >./   t_allweek           - 6.7
+		   >./ 11.7 8.6 9.7 14.2 6.7 11.8 9.2 - 6.7
+		   >./ 5 1.9 3 7.5 0 5.1 2.5
 		   7.5
 		```
 		
-		> if we use parentheses `()` to force APL to compute the maximum of the list before doing subtraction, we only do a single subtraction instead of 7:
-		```APL
-		   ( ⌈/t_allweek ) - ⌊/ t_allweek
-		   ( ⌈/t_allweek ) - 6.7
+		> if we use parentheses `()` to force J to compute the maximum of the list before doing subtraction, we only do a single subtraction instead of 7:
+		```J
+		   ( >./t_allweek ) - <./ t_allweek
+		   ( >./t_allweek ) - 6.7
 		   (     14.2    ) - 6.7
 		   7.5
 		```
@@ -376,14 +376,14 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		</li>
 		<li>
 		To round to the nearest whole number, either add 0.5 and round down:
-		```APL
-		   ⌊0.5+t_allweek
+		```J
+		   <.0.5+t_allweek
 		12 9 10 14 7 12 9
 		```
 		
 		or subtract 0.5 and round up:
-		```APL
-		   ⌈t_allweek-0.5
+		```J
+		   >.t_allweek-0.5
 		12 9 10 14 7 12 9
 		```
 		</li>
@@ -391,7 +391,7 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 
 1. A Mathematical Notation
 
-	Use APL to evaluate the following
+	Use J to evaluate the following
 
 	1. $\prod_{n=1}^{12} n$ (multiply together the first twelve integers)
 
@@ -401,8 +401,8 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 
 	1. $\sum_{n=1}^{100}2n-1$ (add together the first one hundred odd integers)
 
-	1. In TMN, the following expression is equal to `0`, why does the following return `70` in APL?
-		```APL
+	1. In TMN, the following expression is equal to `0`, why does the following return `70` in J?
+		```J
 		   84 - 12 - 1 - 13 - 28 - 9 - 6 - 15  
 		```
 		```
@@ -414,47 +414,50 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 	??? Example "Answers"
 		<ol type="a">
 		<li>
-		```APL
-		   ×/⍳12
+		```J
+		   */1+i.12
      479001600
 		```
 		</li>
 		<li>
-		```APL
-		   +/(⍳17)*2
+		```J
+		   +/(1+i.17)^2  NB. Using Power
+		   +/*:1+i.17    NB. Using Square
      1785
 		```
-		Without parentheses we get the sum of the first 289 integers, instead of the first 17 integers squared.
+		The first version using Power `^` requires parentheses, since without parentheses we get the sum of the first 289 integers (17 squared), instead of the first 17 integers squared.
 
-		|TMN|APL|
+		|TMN|J|
 		|---|---|
-		|$\sum_n^{17^2} n$|`+/⍳17*2`
-		|$\sum_n^{17} n^2$|`+/(⍳17)*2`|
+		|$\sum_n^{17^2} n$|`+/1+i.17^2`
+		|$\sum_n^{17} n^2$|`+/1+(i.17)^2`|
+
+		The second formulation using the Square `*:` verb directly avoids this.
 
 		</li>
 		<li>
-		```APL
-		   +/2×⍳100
+		```J
+		   +/2*1+i.100
      10100
 		```
 		</li>
 		<li>
 		We can either subtract 1 from the even numbers:
-		```APL
-		   +/(2×⍳100)-1
+		```J
+		   +/(2*1+i.100)-1
 		10000
 		```
 
 		or we can add negative 1:
-		```APL
-		   +/¯1+2×⍳100
+		```J
+		   +/_1+2*1+i.100
      10000
 		```
-		The high minus denotes a literal negative, whereas the hyphen indicates subtraction.
+		The underscore denotes a literal negative, whereas the hyphen indicates subtraction.
 		</li>
 		<li>
-		Remember the right-to-left rule: verbs take everything to their right, and the first thing to their left. We can add unnecessary parentheses to show how APL evaluates our expression.
-		```APL
+		Remember the right-to-left rule: verbs take everything to their right, and the first thing to their left. We can add unnecessary parentheses to show how J evaluates our expression.
+		```J
 		   (84 - (12 - (1 - (13 - (28 - (9 - (6 - 15)))))))
 	    70
 		```
@@ -487,15 +490,23 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		<ol type="a">
 		<li>
 		Each $n$th layer has $n^2$ cubes. There are $34,058,310$ cubes in a stack with $467$ layers.
-		```APL
-			+/(⍳4)*2
+		```J
+			+/(1+i.4)^2  NB. Using Power
+			+/*:1+i.4    NB. Using Square
 		```
 		```
 		30
 		```
 		---
-		```APL
-			+/(⍳467)*2
+		```J
+			+/(1+i.467)^2  NB. Using Power, floating point result
+		```
+		```
+		3.40583e7
+		```
+		---
+		```J
+			+/*:1+i.467    NB. Using Square, integer result
 		```
 		```
 		34058310
@@ -503,15 +514,23 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		</li>
 		<li>
 		Each $n$th layer has $(2n-1)^2$ cubes. There are $713,849,500$ cubes in a stack with $812$ layers.
-		```APL
-			+/(¯1+2×⍳4)*2
+		```J
+			+/(_1+2*1+i.4)^2  NB. Using Power
+			+/*:_1+2*1+i.4    NB. Using Power
 		```
 		```
 		84
 		```
 		---
-		```APL
-			+/(¯1+2×⍳812)*2
+		```J
+			+/(_1+2*1+i.812)^2  NB. Using Power, floating point result
+		```
+		```
+		7.1385e8
+		```
+		---
+		```J
+			+/*:_1+2*1+i.812    NB. Using Square, integer result
 		```
 		```
 		713849500
@@ -519,15 +538,22 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		</li>
 		<li>
 		Each $n$th layer has $n^3$ cubes. There are $5,503,716$ cubes in a stack with $68$ layers.
-		```APL
-			+/(⍳3)*3
+		```J
+			+/(1+i.3)^3
 		```
 		```
 		36
 		```
 		---
-		```APL
-			+/(⍳68)*3
+		```J
+			+/(1+i.68)^3  NB. Power returns a floating point result
+		```
+		```
+		5.50372e6
+		```
+		---
+		```J
+			>.+/(1+i.68)^3  NB. Round up or down to coerce to integer
 		```
 		```
 		5503716
@@ -536,8 +562,8 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		</ol>
 
 1. Rewrite the following expressions so that they do not use parentheses.
-	1. `(÷a)×b`
-	1. `(÷a)÷b`
+	1. `(%a)*b`
+	1. `(%a)%b`
 	1. `(a+b)-5`
 	1. `(a+b)+5`
 
