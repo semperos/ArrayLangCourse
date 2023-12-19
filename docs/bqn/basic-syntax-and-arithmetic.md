@@ -136,7 +136,7 @@ Expressions are executed from right to left.
     ⟨ 0 10 20 30 40 50 60 ⟩
 	```
 
-The expression above is "ten *times* the indices from 1 to *two plus five*, or in short: "ten times range two plus five". We can make it clearer using (superfluous) **parentheses** `()`.
+The expression above is "ten *times* the indices from 0 to *two plus five*, or in short: "ten times range two plus five". We can make it clearer using (superfluous) **parentheses** `()`.
 ```BQN
       10×(↕(2+5))
 ```

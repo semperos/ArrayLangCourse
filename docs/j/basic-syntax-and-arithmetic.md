@@ -93,7 +93,7 @@ Dyadic verbs can map between a single value and an array of values.
 
 While experimenting, you may cause a `LENGTH ERROR`:
 
-```APL
+```J
    1 2+3 4 5
 ```
 ```
@@ -102,12 +102,12 @@ While experimenting, you may cause a `LENGTH ERROR`:
 |[-0] 
 ```
 
-verbs such as `+ * >.` apply between elements of two arrays of the same shape, or between one element and many if one of the arguments is a single value. However, if the arrays are of two different shapes, it is not clear how the verb should be applied. Of course, you may want to [apply a verb between all combinations of elements of the left and right argument](./array-logic-data-driven-conditionals.md#the-outer-product), but that will be addressed soon enough.
+Verbs such as `+ * >.` apply between elements of two arrays of the same shape, or between one element and many if one of the arguments is a single value. However, if the arrays are of two different shapes, it is not clear how the verb should be applied. Of course, you may want to [apply a verb between all combinations of elements of the left and right argument](./array-logic-data-driven-conditionals.md#the-outer-product), but that will be addressed soon enough.
 
 ## Order of execution
 Expressions are executed from right to left.
 
-```APL
+```J
    10*i.2+5
 ```
 ```
@@ -116,71 +116,71 @@ Expressions are executed from right to left.
 
 ??? Info "Show me step-by-step"
 	To start, there is a literal number 5:
-	```APL
-	      5
+	```J
+	   5
 	5
 	```
 	
 	Next, there is a plus `+` with a number 2 to its immediate left, so it is evaluated as two plus five:
-	```APL
-	       2+5
+	```J
+	   2+5
 	7
 	```
 	
-	Then the symbol <dfn>iota</dfn> `⍳`. To its left is another verb, times `×`, not a value. So the verb is called <em>monadically</em>. The monadic form of `⍳` is the <dfn>index generator</dfn>, which generates an integer array of length defined by its right argument.
+	Then the symbol <dfn>idot</dfn> `i.`. To its left is another verb, times `*`, not a value. So the verb is called <em>monadically</em>. The monadic form of `i.` is the <dfn>index generator</dfn>, which generates an integer array of length defined by its right argument.
 	```
-	      ⍳2+5
-	1 2 3 4 5 6 7
+	   i.2+5
+	0 1 2 3 4 5 6
 	```
 	
 	Lastly, another dyadic verb, we multiply our list by ten:
 	```
-	   10×⍳2+5
-	10 20 30 40 50 60 70
+	   10*i.2+5
+	0 10 20 30 40 50 60
 	```
 
-The expression above is "ten *times* the indices from 1 to *two plus five*, or in short: "ten times iota two plus five". We can make it clearer using (superfluous) **parentheses** `()`.
-```APL
-   10×(⍳(2+5))
+The expression above is "ten *times* the indices from 0 to *two plus five*, or in short: "ten times idot two plus five". We can make it clearer using (superfluous) **parentheses** `()`.
+```J
+   10*(i.(2+5))
 ```
 ```
-10 20 30 40 50 60 70
+0 10 20 30 40 50 60
 ```
 
 Of course, we can change the order of execution using different parentheses.
 
-```APL
-   (10×⍳2)+5
+```J
+   (10*i.2)+5
 ```
 ```
-15 25
+5 15
 ```
 
 ??? Info "Show me step-by-step"
 	Beginning from the right, there is a literal number 5:
-	```APL
-	   (10×⍳2)+5
-	        5
+	```J
+	   (10*i.2)+5
+	            5
 	```
 	
 	Then there is a plus symbol `+`. Before we can decide if it is being called monadically or dyadically, we must look to the left.
 	
-	```APL
+	```J
 	      )+5
 	```
 	
 	A right parenthesis. We must evaluate the contents of the parentheses to see if it is a verb or a value.
 	
-	```APL
-	   (10×⍳2)
+	```J
+	   (10*i.2)
 	```
 	
-	This expression evaluates to the list `10 20`. Since it is a value, it is used as the left argument to our plus verb.
+	This expression evaluates to the list `0 10`. Since it is a value, it is used as the left argument to our plus verb.
 	
-	```APL
-	   (10×⍳2)+5
-	   (10 20)+5
-	15 25
+	```J
+	   (10*i.2)+5
+	   (0   10)+5
+	5 15
 	```
 
 Infix (dyadic) verbs have a **short** *left* scope and **long** *right* scope. This means that they take the result of everything to their right hand side as their right argument. 
@@ -189,14 +189,14 @@ If there is one, the left argument is the value to the <em>immediate</em> left.
 
 However, juxtaposed values form lists <em>before</em> any verbs are applied. This is called <dfn>stranding</dfn> and lets us write very natural expressions, such as:
 
-```APL
+```J
    1 2 3 + 4 5 6
 5 7 9
 ```
 
 but this can lead to some surprises if we are not aware:
 
-```APL
+```J
    2 + 2 2 + 2
 ```
 ```
@@ -205,18 +205,18 @@ but this can lead to some surprises if we are not aware:
 
 ??? Info "Show me step-by-step"
 	First, there is a literal number 2
-	```APL
+	```J
 	          2
 	2
 	```
 	
 	Then there is a symbol `+`. What, if any, is the value to its immediate left?
-	```APL
+	```J
 	       2 2 + 2
 	```
 	
 	It is a 2-element vector `2 2`. The plus verb maps between these elements and the single number on the right:
-	```APL
+	```J
 	       2 2 + 2
 	4 4
 	```
@@ -229,18 +229,18 @@ but this can lead to some surprises if we are not aware:
 	```
 
 ## Comments
-Anything after a lamp symbol `⍝` is ignored.
+Anything after a _nota bene_ symbol `NB.` is ignored.
 
-```APL
-   ⍝ nothing happens on this line
-   2 × 3 ⍝ 4 5
+```J
+   NB. nothing happens on this line
+   2 * 3 NB. 4 5
 ```
 ```
 6
 ```
 ---
-```APL
-	  'A'   ⍝ lamp is not an "A"
+```J
+   'A'   NB. It means "note well"
 ```
 ```
 A
@@ -248,22 +248,22 @@ A
 
 ## The reduction operator
 Adding a list of numbers *could* become very tedious...
-```APL
+```J
    1+2+3+4+5+6+7+8+9+10+11+12+13+14+15
 ```
 ```
 120
 ```
 
-The **reduce** [operator](./Operators.md) `F/` inserts the verb `F` to its left between parts of the right argument array.
-```APL
+The **insert** [adverb](./Operators.md) `u/` inserts the verb `u` to its left between parts of the right argument array.
+```J
    +/1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 ```
 ```
 120
 ```
 
-It is called *reduce* because it reduces the number of dimensions of its argument. In the example above, we have a **vector** (1 dimensional, list) argument and return a **scalar** (0 dimensional, single value) result.
+It is called *insert* because it has the effect of inserting the verb to its left between each element of its right argument. As a reduction operation, it also reduces the number of dimensions of its argument. In the example above, we have a **vector** (1 dimensional, list) argument and return a **scalar** (0 dimensional, single value) result.
 
 ## The index generator
 The index generator `i. y` generates integers up to the integer right argument `y`
@@ -280,18 +280,19 @@ So we can do an arithmetic sum as follows
 
 |**Traditional Mathematical Notation (TMN)** | **APL** |
 |---|---|
-| $\sum_{n=1}^N n$ | `+/⍳N`
+| $\sum_{n=1}^N n$ | `+/i.N`
 
 ## What do these errors mean?
-While experimenting, you are very likely to come across these:
 
-```APL
-   ⍳¯4
+In the APL and BQN versions of this lesson, a negative number passed as the right argument to the index generator function produces an error. How can an item in an array have a negative index?
+
+In J, `i. y` is generalized to produce an array of numbers monotonically increasing starting at `y`:
+
+```J
+   i._4
 ```
 ```
-DOMAIN ERROR
-   ⍳¯4
-   ∧
+3 2 1 0
 ```
 
 The `DOMAIN ERROR` means that APL cannot compute what you are asking for. In this case, it cannot generate indices up to a negative number. Negative numbers are <em>outside the domain</em> of the index generator verb. How might you [generate integers from 1 to negative four](./dfns-and-assignment.md#problem-set-2)?
