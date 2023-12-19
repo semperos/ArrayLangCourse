@@ -1,7 +1,7 @@
 # Basic syntax
 
 ## Functions and arguments
-APL has two-argument, infix functions. These are called <dfn>dyadic</dfn> functions.
+BQN has two-argument, infix functions. These are called <dfn>dyadic</dfn> functions.
 
 ```BQN
       3 × 5
@@ -26,7 +26,7 @@ Some functions map between elements of their left and right argument arrays. It 
 ```
 
 Negative numbers are written with a <dfn>high minus</dfn> `¯` to differentiate between negation (`-3`) and literal negative numbers (`¯3`).
-```APL
+```BQN
       1‿2‿3 - 1‿0‿¯1
 ```
 ```
@@ -146,7 +146,7 @@ The expression above is "ten *times* the indices from 1 to *two plus five*, or i
 
 Of course, we can change the order of execution using different parentheses.
 
-```APL
+```BQN
       (10×↕2)+5
 ```
 ```
@@ -174,7 +174,7 @@ Of course, we can change the order of execution using different parentheses.
 	
 	This expression evaluates to the list `⟨ 0 10 ⟩`. Since it is a value, it is used as the left argument to our add function.
 	
-	```APL
+	```BQN
 	      (10×↕2)+5
 	      ⟨0, 10⟩+5
 	⟨ 5 15 ⟩
@@ -295,7 +295,7 @@ So we can do an arithmetic sum as follows:
 ## What do these errors mean?
 While experimenting, you are very likely to come across these:
 
-```APL
+```BQN
       ↕¯4
 ```
 ```
@@ -319,7 +319,7 @@ Second-level parts of a train must be functions
 
 This error represents a syntactic error. Here, BQN thinks you're trying to string together multiple functions (a _train_ whose cars are functions). We'll study trains and partial function application in later lessons.
 
-```APL
+```BQN
       a
 ```
 ```
@@ -361,7 +361,7 @@ We have not seen any named functions or variables yet; nothing has been assigned
 		```
 		</li>
 		<li>
-		```APL
+		```BQN
 		      (⌈´t_allweek)-⌊´t_allweek
 		7.499999999999999
 		```
