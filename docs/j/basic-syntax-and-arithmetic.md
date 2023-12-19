@@ -1,143 +1,147 @@
 # Basic syntax
 
 ## Functions and arguments
-APL has two-argument, infix functions. These are called <dfn>dyadic</dfn> functions.
+Functions are called <dfn>verbs</dfn> in J.
 
-```APL
-      3 × 5
+J has two-argument, infix verbs. These are called <dfn>dyadic</dfn> verbs.
+
+```J
+   3 * 5
 ```
 ```
 15
 ```
 ---
 ```APL
-      3 - 5
+   3 - 5
 ```
 ```
-¯2
+_2
 ```
 
-Some functions map between elements of their left and right argument arrays. It is easy to add lists of numbers together:
-```APL
-      1 2 3 + 4 5 6
+Some verbs map between elements of their left and right argument arrays. It is easy to add lists of numbers together:
+```J
+   1 2 3 + 4 5 6
 ```
 ```
 5 7 9
 ```
 
-Negative numbers are written with a <dfn>high minus</dfn> `¯` to differentiate between negation (`-3`) and literal negative numbers (`¯3`).
-```APL
-      1 2 3 - 1 0 ¯1
+Negative numbers are written with an <dfn>underscore</dfn> `_` to differentiate between negation (`-3`) and literal negative numbers (`_3`).
+```J
+   1 2 3 - 1 0 _1
 ```
 ```
 0 2 4
 ```
 
-There are also one-argument, prefix functions. These are called <dfn>monadic</dfn> functions.
-```APL
-      - 5 ¯3 0 ¯4 2
+There are also one-argument, prefix verbs. These are called <dfn>monadic</dfn> verbs.
+```J
+   - 5 _3 0 _4 2
 ```
 ```
-¯5 3 0 4 ¯2
+_5 3 0 4 _2
 ```
 ---
-```APL
-      ⌽ 1 2 3 4 5
+```J
+   |. 1 2 3 4 5
 ```
 ```
 5 4 3 2 1
 ```
 
-Some symbols represent both a monadic and a dyadic function, but these are often closely related. As we will see later, even user-defined functions can be monadic, dyadic or even both (<dfn>ambivalent</dfn>).
+All J built-ins are either one or two-character ASCII symbols.
 
-**:bulb: Try this**: Use these functions monadically and dyadically:
+Some symbols represent both a monadic and a dyadic verb, but these are often closely related. As we will see later, even user-defined verbs can be monadic, dyadic or even both (<dfn>ambivalent</dfn>).
+
+**:bulb: Try this**: Use these verbs monadically and dyadically:
 
 <div class="center language-APL" markdown="span">
 <div class="displayBox" markdown="span">
-<a class="glyph" title="Plus">`+`</a>
-<a class="glyph" title="Minus/Negate">`-`</a>
-<a class="glyph" title="Times/Sign">`×`</a>
-<a class="glyph" title="Divide/Inverse">`÷`</a>
-<a class="glyph" title="Residue/Magnitude">`|`</a>
-<a class="glyph" title="Power">`*`</a>
-<a class="glyph" title="Logarithm">`⍟`</a>
-<a class="glyph" title="Max/Ceiling">`⌈`</a>
-<a class="glyph" title="Min/Floor">`⌊`</a>
+<a class="glyph" title="Conjugate/Plus">`+`</a>
+<a class="glyph" title="Negate/Minus">`-`</a>
+<a class="glyph" title="Signum/Times">`*`</a>
+<a class="glyph" title="Reciprocal/Divide">`%`</a>
+<a class="glyph" title="Magnitude/Residue">`|`</a>
+<a class="glyph" title="Exponential/Power">`^`</a>
+<a class="glyph" title="Natural Log/Logarithm">`^.`</a>
+<a class="glyph" title="Ceiling/Greater of/Max">`>.`</a>
+<a class="glyph" title="Floor/Lesser of/Min">`<.`</a>
 </div>
 </div>
 
 ## Singleton extension
-Dyadic functions can map between a single value and an array of values.
-```APL
-      3 × 1 10 100
+Dyadic verbs can map between a single value and an array of values.
+```J
+   3 * 1 10 100
 ```
 ```
 3 30 300
 ```
 ---
-```APL
-      3 = 1 2 3 4 5
+```J
+   3 = 1 2 3 4 5
 ```
 ```
 0 0 1 0 0
 ```
 
-**:bulb: Try this**: Replace the functions in the previous two expressions with:
-<a class="glyph" title="Max">`⌈`</a>
-		<a class="glyph" title="Min">`⌊`</a>
-		<a class="glyph" title="Less than">`<`</a>
+**:bulb: Try this**: Replace the verbs in the previous two expressions with:
+<a class="glyph" title="Max">`>.`</a>
+<a class="glyph" title="Min">`<.`</a>
+<a class="glyph" title="Less than">`<`</a>
 
 While experimenting, you may cause a `LENGTH ERROR`:
 
 ```APL
-      1 2+3 4 5
+   1 2+3 4 5
 ```
 ```
-LENGTH ERROR: Mismatched left and right argument shapes
-      1 2+3 4 5
-         ∧
+|length error
+|   1 2    +3 4 5
+|[-0] 
 ```
 
-Functions such as `+ × ⌈` apply between elements of two arrays of the same shape, or between one element and many if one of the arguments is a single value. However, if the arrays are of two different shapes, it is not clear how the function should be applied. Of course, you may want to [apply a function between all combinations of elements of the left and right argument](./array-logic-data-driven-conditionals.md#the-outer-product), but that will be addressed soon enough.
+verbs such as `+ * >.` apply between elements of two arrays of the same shape, or between one element and many if one of the arguments is a single value. However, if the arrays are of two different shapes, it is not clear how the verb should be applied. Of course, you may want to [apply a verb between all combinations of elements of the left and right argument](./array-logic-data-driven-conditionals.md#the-outer-product), but that will be addressed soon enough.
 
 ## Order of execution
 Expressions are executed from right to left.
 
 ```APL
-      10×⍳2+5
+   10*i.2+5
 ```
 ```
-10 20 30 40 50 60 70
+0 10 20 30 40 50 60
 ```
 
 ??? Info "Show me step-by-step"
 	To start, there is a literal number 5:
 	```APL
-	            5
+	      5
 	5
 	```
 	
 	Next, there is a plus `+` with a number 2 to its immediate left, so it is evaluated as two plus five:
 	```APL
-	          2+5
+	       2+5
 	7
 	```
 	
-	Then the symbol <dfn>iota</dfn> `⍳`. To its left is another function, times `×`, not a value. So the function is called <em>monadically</em>. The monadic form of `⍳` is the <dfn>index generator</dfn>, which generates an integer array of length defined by its right argument.
+	Then the symbol <dfn>iota</dfn> `⍳`. To its left is another verb, times `×`, not a value. So the verb is called <em>monadically</em>. The monadic form of `⍳` is the <dfn>index generator</dfn>, which generates an integer array of length defined by its right argument.
 	```
-	         ⍳2+5
+	      ⍳2+5
 	1 2 3 4 5 6 7
 	```
 	
-	Lastly, another dyadic function, we multiply our list by ten:
+	Lastly, another dyadic verb, we multiply our list by ten:
 	```
-	      10×⍳2+5
+	   10×⍳2+5
 	10 20 30 40 50 60 70
 	```
 
 The expression above is "ten *times* the indices from 1 to *two plus five*, or in short: "ten times iota two plus five". We can make it clearer using (superfluous) **parentheses** `()`.
 ```APL
-      10×(⍳(2+5))
+   10×(⍳(2+5))
 ```
 ```
 10 20 30 40 50 60 70
@@ -146,7 +150,7 @@ The expression above is "ten *times* the indices from 1 to *two plus five*, or i
 Of course, we can change the order of execution using different parentheses.
 
 ```APL
-      (10×⍳2)+5
+   (10×⍳2)+5
 ```
 ```
 15 25
@@ -155,45 +159,45 @@ Of course, we can change the order of execution using different parentheses.
 ??? Info "Show me step-by-step"
 	Beginning from the right, there is a literal number 5:
 	```APL
-	      (10×⍳2)+5
-	              5
+	   (10×⍳2)+5
+	        5
 	```
 	
 	Then there is a plus symbol `+`. Before we can decide if it is being called monadically or dyadically, we must look to the left.
 	
 	```APL
-	            )+5
+	      )+5
 	```
 	
-	A right parenthesis. We must evaluate the contents of the parentheses to see if it is a function or a value.
+	A right parenthesis. We must evaluate the contents of the parentheses to see if it is a verb or a value.
 	
 	```APL
-	      (10×⍳2)
+	   (10×⍳2)
 	```
 	
-	This expression evaluates to the list `10 20`. Since it is a value, it is used as the left argument to our plus function.
+	This expression evaluates to the list `10 20`. Since it is a value, it is used as the left argument to our plus verb.
 	
 	```APL
-	      (10×⍳2)+5
-	      (10 20)+5
+	   (10×⍳2)+5
+	   (10 20)+5
 	15 25
 	```
 
-Infix (dyadic) functions have a **short** *left* scope and **long** *right* scope. This means that they take the result of everything to their right hand side as their right argument. 
+Infix (dyadic) verbs have a **short** *left* scope and **long** *right* scope. This means that they take the result of everything to their right hand side as their right argument. 
 
 If there is one, the left argument is the value to the <em>immediate</em> left.
 
-However, juxtaposed values form lists <em>before</em> any functions are applied. This is called <dfn>stranding</dfn> and lets us write very natural expressions, such as:
+However, juxtaposed values form lists <em>before</em> any verbs are applied. This is called <dfn>stranding</dfn> and lets us write very natural expressions, such as:
 
 ```APL
-      1 2 3 + 4 5 6
+   1 2 3 + 4 5 6
 5 7 9
 ```
 
 but this can lead to some surprises if we are not aware:
 
 ```APL
-      2 + 2 2 + 2
+   2 + 2 2 + 2
 ```
 ```
 6 6
@@ -202,34 +206,34 @@ but this can lead to some surprises if we are not aware:
 ??? Info "Show me step-by-step"
 	First, there is a literal number 2
 	```APL
-	                2
+	          2
 	2
 	```
 	
 	Then there is a symbol `+`. What, if any, is the value to its immediate left?
 	```APL
-	          2 2 + 2
+	       2 2 + 2
 	```
 	
-	It is a 2-element vector `2 2`. The plus function maps between these elements and the single number on the right:
+	It is a 2-element vector `2 2`. The plus verb maps between these elements and the single number on the right:
 	```APL
-	          2 2 + 2
+	       2 2 + 2
 	4 4
 	```
 	
 	Finally there is another addition. The overall evaluation looks like the following:
 	```APL
-	      2 + 2 2 + 2
-	      2 + 4 4
-	      6 6
+	   2 + 2 2 + 2
+	   2 + 4 4
+	   6 6
 	```
 
 ## Comments
 Anything after a lamp symbol `⍝` is ignored.
 
 ```APL
-      ⍝ nothing happens on this line
-      2 × 3 ⍝ 4 5
+   ⍝ nothing happens on this line
+   2 × 3 ⍝ 4 5
 ```
 ```
 6
@@ -245,15 +249,15 @@ A
 ## The reduction operator
 Adding a list of numbers *could* become very tedious...
 ```APL
-      1+2+3+4+5+6+7+8+9+10+11+12+13+14+15
+   1+2+3+4+5+6+7+8+9+10+11+12+13+14+15
 ```
 ```
 120
 ```
 
-The **reduce** [operator](./Operators.md) `F/` inserts the function `F` to its left between parts of the right argument array.
+The **reduce** [operator](./Operators.md) `F/` inserts the verb `F` to its left between parts of the right argument array.
 ```APL
-      +/1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+   +/1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 ```
 ```
 120
@@ -262,13 +266,15 @@ The **reduce** [operator](./Operators.md) `F/` inserts the function `F` to its l
 It is called *reduce* because it reduces the number of dimensions of its argument. In the example above, we have a **vector** (1 dimensional, list) argument and return a **scalar** (0 dimensional, single value) result.
 
 ## The index generator
-The index generator `⍳⍵` generates integers up to the integer right argument `⍵`
-```APL
-      ⍳10
+The index generator `i. y` generates integers up to the integer right argument `y`
+```J
+   i.10
 ```
 ```
-1 2 3 4 5 6 7 8 9 10
+0 1 2 3 4 5 6 7 8 9
 ```
+
+**Note:** APL's `⍳` starts at `1`, while J's `i.` starts at 0.
 
 So we can do an arithmetic sum as follows
 
@@ -280,33 +286,33 @@ So we can do an arithmetic sum as follows
 While experimenting, you are very likely to come across these:
 
 ```APL
-      ⍳¯4
+   ⍳¯4
 ```
 ```
 DOMAIN ERROR
-      ⍳¯4
-      ∧
+   ⍳¯4
+   ∧
 ```
 
-The `DOMAIN ERROR` means that APL cannot compute what you are asking for. In this case, it cannot generate indices up to a negative number. Negative numbers are <em>outside the domain</em> of the index generator function. How might you [generate integers from 1 to negative four](./dfns-and-assignment.md#problem-set-2)?
+The `DOMAIN ERROR` means that APL cannot compute what you are asking for. In this case, it cannot generate indices up to a negative number. Negative numbers are <em>outside the domain</em> of the index generator verb. How might you [generate integers from 1 to negative four](./dfns-and-assignment.md#problem-set-2)?
 
 ```APL
-      1+
+   1+
 SYNTAX ERROR: Missing right argument
-      1+
-       ∧
+   1+
+    ∧
 ```
 
-A `SYNTAX ERROR` means that the expression which you tried to execute does not make sense. In the case above, it is because functions always either take a single argument to their right or two arguments, one to the right and one to the left. Functions never take a single argument to their left.
+A `SYNTAX ERROR` means that the expression which you tried to execute does not make sense. In the case above, it is because verbs always either take a single argument to their right or two arguments, one to the right and one to the left. verbs never take a single argument to their left.
 
 ```APL
-      a
+   a
 VALUE ERROR: Undefined name: a
-      a
-      ∧
+   a
+   ∧
 ```
 
-A `VALUE ERROR` means that there is nothing associated with the name provided. We have not seen any named functions or variables yet; nothing has been assigned to the name `a`, so trying to use it in an expression is meaningless.
+A `VALUE ERROR` means that there is nothing associated with the name provided. We have not seen any named verbs or variables yet; nothing has been assigned to the name `a`, so trying to use it in an expression is meaningless.
 
 ## Problem Set 1
 1.   
@@ -327,56 +333,56 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		<ol type="a">
 		<li>
 		```APL
-		      ⌈/t_allweek
+		   ⌈/t_allweek
 		14.2
 		```
 		</li>
 		<li>
 		```APL
-		      ⌊/t_allweek
+		   ⌊/t_allweek
 		6.7
 		```
 		</li>
 		<li>
 		```APL
-		      (⌈/t_allweek)-⌊/t_allweek
+		   (⌈/t_allweek)-⌊/t_allweek
 		7.5
 		```
 		
 		> You may have found the correct answer using the following expression:
 		```APL
-		      ⌈/t_allweek-⌊/t_allweek
+		   ⌈/t_allweek-⌊/t_allweek
 		7.5
 		```
 		
 		> but this is less efficient because it does more subtractions than it needs to. Recall the right-to-left evaluation:
 		```APL
-		      ⌈/      t_allweek                 - ⌊/ t_allweek
-		      ⌈/      t_allweek                 - 6.7
-		      ⌈/ 11.7 8.6 9.7 14.2 6.7 11.8 9.2 - 6.7
-		      ⌈/ 5 1.9 3 7.5 0 5.1 2.5
-		      7.5
+		   ⌈/   t_allweek           - ⌊/ t_allweek
+		   ⌈/   t_allweek           - 6.7
+		   ⌈/ 11.7 8.6 9.7 14.2 6.7 11.8 9.2 - 6.7
+		   ⌈/ 5 1.9 3 7.5 0 5.1 2.5
+		   7.5
 		```
 		
 		> if we use parentheses `()` to force APL to compute the maximum of the list before doing subtraction, we only do a single subtraction instead of 7:
 		```APL
-		      ( ⌈/t_allweek ) - ⌊/ t_allweek
-		      ( ⌈/t_allweek ) - 6.7
-		      (     14.2    ) - 6.7
-		      7.5
+		   ( ⌈/t_allweek ) - ⌊/ t_allweek
+		   ( ⌈/t_allweek ) - 6.7
+		   (     14.2    ) - 6.7
+		   7.5
 		```
 		
 		</li>
 		<li>
 		To round to the nearest whole number, either add 0.5 and round down:
 		```APL
-		      ⌊0.5+t_allweek
+		   ⌊0.5+t_allweek
 		12 9 10 14 7 12 9
 		```
 		
 		or subtract 0.5 and round up:
 		```APL
-		      ⌈t_allweek-0.5
+		   ⌈t_allweek-0.5
 		12 9 10 14 7 12 9
 		```
 		</li>
@@ -396,7 +402,7 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 
 	1. In TMN, the following expression is equal to `0`, why does the following return `70` in APL?
 		```APL
-		      84 - 12 - 1 - 13 - 28 - 9 - 6 - 15  
+		   84 - 12 - 1 - 13 - 28 - 9 - 6 - 15  
 		```
 		```
 		70
@@ -408,14 +414,14 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		<ol type="a">
 		<li>
 		```APL
-		      ×/⍳12
-        479001600
+		   ×/⍳12
+     479001600
 		```
 		</li>
 		<li>
 		```APL
-		      +/(⍳17)*2
-        1785
+		   +/(⍳17)*2
+     1785
 		```
 		Without parentheses we get the sum of the first 289 integers, instead of the first 17 integers squared.
 
@@ -427,28 +433,28 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		</li>
 		<li>
 		```APL
-		      +/2×⍳100
-        10100
+		   +/2×⍳100
+     10100
 		```
 		</li>
 		<li>
 		We can either subtract 1 from the even numbers:
 		```APL
-		      +/(2×⍳100)-1
+		   +/(2×⍳100)-1
 		10000
 		```
 
 		or we can add negative 1:
 		```APL
-		      +/¯1+2×⍳100
-        10000
+		   +/¯1+2×⍳100
+     10000
 		```
 		The high minus denotes a literal negative, whereas the hyphen indicates subtraction.
 		</li>
 		<li>
-		Remember the right-to-left rule: functions take everything to their right, and the first thing to their left. We can add unnecessary parentheses to show how APL evaluates our expression.
+		Remember the right-to-left rule: verbs take everything to their right, and the first thing to their left. We can add unnecessary parentheses to show how APL evaluates our expression.
 		```APL
-		      (84 - (12 - (1 - (13 - (28 - (9 - (6 - 15)))))))
+		   (84 - (12 - (1 - (13 - (28 - (9 - (6 - 15)))))))
 	    70
 		```
 		</li>

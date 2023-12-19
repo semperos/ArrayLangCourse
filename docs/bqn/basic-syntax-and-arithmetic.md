@@ -286,6 +286,8 @@ The Range function `↕𝕩` generates integers from `0` up to the integer right
 ⟨ 0 1 2 3 4 5 6 7 8 9 ⟩
 ```
 
+**Note:** APL's `⍳` starts at `1`, while BQN's `↕` starts at 0.
+
 So we can do an arithmetic sum as follows:
 
 |**Traditional Mathematical Notation (TMN)** | **BQN** |
