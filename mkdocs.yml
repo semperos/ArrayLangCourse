@@ -1,5 +1,5 @@
-site_name: APL Course
-site_description: A guided introduction to Dyalog APL
+site_name: Array Languages Course
+site_description: A guided introduction to array programming languages
 docs_dir: docs/
 site_url: https://dyalog.com
 markdown_extensions:
@@ -22,9 +22,9 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 theme:
   name: material
-  favicon: 'img/favicon-32.png'
+  favicon: "img/favicon-32.png"
   language: en
-  logo: 'img/dyalog-white.svg'
+  logo: "img/dyalog-white.svg"
   features:
     - navigation.instant
 extra_css:
@@ -35,30 +35,37 @@ extra:
       link: https://dyalog.com
     - icon: material/elephant
       link: https://mastodon.social/@dyalog
-    - icon: fontawesome/brands/twitter 
+    - icon: fontawesome/brands/twitter
       link: https://twitter.com/dyalogapl
 nav:
   - About: index.md
-  - basic-syntax-and-arithmetic.md
-  - dfns-and-assignment.md
-  - array-logic-data-driven-conditionals.md
-  - multidimensional-and-nested-arrays.md
-  - cells-and-axes.md
-  - finding-and-replacing-values.md
-  - selecting-from-arrays.md
-  - broken-keyboard-problems.md
-  - loops-and-recursion.md
-  - Extra Assignment: Assignment.md
-  - Workspace Basics: Workspaces.md
-  - Namespaces and Other Objects: Namespaces.md
-  - Getting Help: Help.md
-  - User-defined Functions: user-defined-functions.md
-  - Operators: Operators.md
-  - Quad Names: Quad names.md
-  - error-handling-and-debugging.md
-  - Data IO: Data.md
-  - Code IO: Code.md
-  - External Interfaces: Interfaces.md
-  - Historical Quirks: Quirks.md
-  - Interpreter Internals: Interpreter-internals.md
-  - Further Reading: Reading.md
+  - "Dyalog APL":
+      - dyalog/basic-syntax-and-arithmetic.md
+      - dyalog/dfns-and-assignment.md
+      - dyalog/array-logic-data-driven-conditionals.md
+      - dyalog/multidimensional-and-nested-arrays.md
+      - dyalog/cells-and-axes.md
+      - dyalog/finding-and-replacing-values.md
+      - dyalog/selecting-from-arrays.md
+      - dyalog/broken-keyboard-problems.md
+      - dyalog/loops-and-recursion.md
+      - Extra Assignment: dyalog/Assignment.md
+      - Workspace Basics: dyalog/Workspaces.md
+      - Namespaces and Other Objects: dyalog/Namespaces.md
+      - Getting Help: dyalog/Help.md
+      - User-defined Functions: dyalog/user-defined-functions.md
+      - Operators: dyalog/Operators.md
+      - Quad Names: dyalog/Quad names.md
+      - dyalog/error-handling-and-debugging.md
+      - Data IO: dyalog/Data.md
+      - Code IO: dyalog/Code.md
+      - External Interfaces: dyalog/Interfaces.md
+      - Historical Quirks: dyalog/Quirks.md
+      - Interpreter Internals: dyalog/Interpreter-internals.md
+      - Further Reading: dyalog/Reading.md
+  - "BQN":
+      - bqn/basic-syntax-and-arithmetic.md
+  - J:
+      - j/basic-syntax-and-arithmetic.md
+  - K:
+      - k/basic-syntax-and-arithmetic.md
