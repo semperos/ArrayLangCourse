@@ -471,21 +471,21 @@ A `'value` means that there is nothing associated with the name provided. We hav
 1. Pyramid Schemes
 	1. Sugar cubes are stacked in an arrangement as shown by **Figure 1**.
 
-		<img src="../img/SquaredCubes.png" width="200px" alt="Stacked sugar cubes"/>
+		<img src="../../img/SquaredCubes.png" width="200px" alt="Stacked sugar cubes"/>
 			<figcaption><strong>Figure 1.</strong> Stacked sugar cubes</figcaption>
 
 		This stack has `4` **layers** and a total of `30` cubes. How many cubes are there in a similar stack with `467` **layers**?
 
 	1. Now consider the stack in **Figure 2**.
 
-		<img src="../img/OddSquaredCubes.png" width="280px" alt="Differently stacked sugar cubes"/>
+		<img src="../../img/OddSquaredCubes.png" width="280px" alt="Differently stacked sugar cubes"/>
 			<figcaption><strong>Figure 2.</strong> Differently stacked sugar cubes</figcaption>
 
 		The arrangement in **Figure 2** has `4` **layers** and `84` cubes. How many cubes are there in a similar stack with `812` **layers**?
 
 	1. Now look at **Figure 3**.
 
-		<img src="../img/CubedCubes.png" width="280px" alt="This is just a waste of sugar cubes by now..."/>
+		<img src="../../img/CubedCubes.png" width="280px" alt="This is just a waste of sugar cubes by now..."/>
 			<figcaption><strong>Figure 3. </strong>This is just a waste of sugar cubes by now...</figcaption>
 
 		The stack in **Figure 3** has `3` **"layers"** and `36` cubes in total. How many cubes are there in a similar stack with `68` **"layers"**?
