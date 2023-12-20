@@ -275,7 +275,7 @@ The [**fold** operator](https://mlochbaum.github.io/BQN/doc/fold.html./Operators
 120
 ```
 
-A fold is sometimes called *reduce* because it reduces the number of dimensions of its argument. In the example above, we have a **vector** (1 dimensional, list) argument and return a **scalar** (0 dimensional, single value) result.
+Fold is also known as *reduce* because it reduces the number of dimensions of its argument. In the example above, we have a **vector** (1 dimensional, list) argument and return a **scalar** (0 dimensional, single value) result.
 
 ## Range: The index generator
 The Range function `↕𝕩` generates integers from `0` up to the integer right argument `𝕩`

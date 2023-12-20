@@ -259,66 +259,81 @@ The **fold** [operator](./Operators.md) `F/` inserts the function `F` to its lef
 120
 ```
 
-TODO START HERE and share the "fold" explanation with the BQN article.
-
-It is called *reduce* because it reduces the number of dimensions of its argument. In the example above, we have a **vector** (1 dimensional, list) argument and return a **scalar** (0 dimensional, single value) result.
+Fold is also known as *reduce* because it reduces the number of dimensions of its argument. In the example above, we have a **vector** (1 dimensional, list) argument and return a **scalar** (0 dimensional, single value) result.
 
 ## The index generator
-The index generator `⍳⍵` generates integers up to the integer right argument `⍵`
-```APL
-   ⍳10
+The index generator `!i` generates integers up to the integer right argument `i`
+
+```K
+   !10
 ```
 ```
-1 2 3 4 5 6 7 8 9 10
+0 1 2 3 4 5 6 7 8 9
 ```
+
+**Note:** APL's `⍳` starts at `1`, while K's `!` starts at 0.
 
 So we can do an arithmetic sum as follows
 
 |**Traditional Mathematical Notation (TMN)** | **APL** |
 |---|---|
-| $\sum_{n=1}^N n$ | `+/⍳N`
+| $\sum_{n=1}^N n$ | `+/!N`
 
 ## What do these errors mean?
-While experimenting, you are very likely to come across these:
 
-```APL
-   ⍳¯4
+In the APL and BQN versions of this lesson, a negative number passed as the right argument to the index generator function produces an error. How can an item in an array have a negative index?
+
+In K, `!i` simply extends the domain to negative numbers and continues to return a monotonically increasing array with `i` as the starting point:
+
+```K
+   !-4
 ```
 ```
-DOMAIN ERROR
-   ⍳¯4
-   ∧
+-4 -3 -2 -1
 ```
 
-The `DOMAIN ERROR` means that APL cannot compute what you are asking for. In this case, it cannot generate indices up to a negative number. Negative numbers are <em>outside the domain</em> of the index generator function. How might you [generate integers from 1 to negative four](./dfns-and-assignment.md#problem-set-2)?
+Here's another behavior you might encounter:
 
-```APL
+```K
    1+
-SYNTAX ERROR: Missing right argument
-   1+
-    ∧
+```
+```
+1+
 ```
 
-A `SYNTAX ERROR` means that the expression which you tried to execute does not make sense. In the case above, it is because functions always either take a single argument to their right or two arguments, one to the right and one to the left. Functions never take a single argument to their left.
+What is this? We can use <dfn>type</dfn> `@` to interrogate the type:
 
-```APL
-   a
-VALUE ERROR: Undefined name: a
-   a
-   ∧
+```K
+   @(1+)
+```
+```
+`p
 ```
 
-A `VALUE ERROR` means that there is nothing associated with the name provided. We have not seen any named functions or variables yet; nothing has been assigned to the name `a`, so trying to use it in an expression is meaningless.
+The symbol `\`p` represents a <dfn>projection</dfn>, which is a partially applied function. We'll talk more about that later.
+
+Here's an actual error you might encounter:
+
+```K
+   a
+```
+```
+'value
+ a
+ ^
+```
+
+A `'value` means that there is nothing associated with the name provided. We have not seen any named functions or variables yet; nothing has been assigned to the name `a`, so trying to use it in an expression is meaningless.
 
 ## Problem Set 1
 1.   
-	The average daily temperatures, in degrees Celcius, for 7 days are stored in a variable `t_allweek`.
+	The average daily temperatures, in degrees Celcius, for 7 days are stored in a variable `adt`. Note that unlike in APL, BQN, and J for which we named this variable `t_allweek`, K does not permit `_` in symbols because it's a built-in function.
 	
-	```APL
-	t_allweek ← 11.7 8.6 9.7 14.2 6.7 11.8 9.2
+	```K
+	adt:11.7 8.6 9.7 14.2 6.7 11.8 9.2
 	```
 	
-	Use APL to compute the follwing:
+	Use K to compute the follwing:
 	
 	1. The highest daily temperature
 	1. The lowest daily temperature
@@ -328,57 +343,51 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 	??? Example "Answers"
 		<ol type="a">
 		<li>
-		```APL
-		   ⌈/t_allweek
+		```K
+		   |/adt
 		14.2
 		```
 		</li>
 		<li>
-		```APL
-		   ⌊/t_allweek
+		```K
+		   &/adt
 		6.7
 		```
 		</li>
 		<li>
-		```APL
-		   (⌈/t_allweek)-⌊/t_allweek
-		7.5
+		```K
+		   (|/adt)-&/adt
+		7.499999999999999
 		```
 		
 		> You may have found the correct answer using the following expression:
-		```APL
-		   ⌈/t_allweek-⌊/t_allweek
-		7.5
+		```K
+		   |/adt-&/adt
+		7.499999999999999
 		```
 		
 		> but this is less efficient because it does more subtractions than it needs to. Recall the right-to-left evaluation:
-		```APL
-		   ⌈/   t_allweek           - ⌊/ t_allweek
-		   ⌈/   t_allweek           - 6.7
-		   ⌈/ 11.7 8.6 9.7 14.2 6.7 11.8 9.2 - 6.7
-		   ⌈/ 5 1.9 3 7.5 0 5.1 2.5
+		```K
+		   |/ adt - &/ adt
+		   |/ adt - 6.7
+		   |/ 11.7 8.6 9.7 14.2 6.7 11.8 9.2 - 6.7
+		   |/ 5 1.9 3 7.5 0 5.1 2.5
 		   7.5
 		```
 		
-		> if we use parentheses `()` to force APL to compute the maximum of the list before doing subtraction, we only do a single subtraction instead of 7:
-		```APL
-		   ( ⌈/t_allweek ) - ⌊/ t_allweek
-		   ( ⌈/t_allweek ) - 6.7
-		   (     14.2    ) - 6.7
-		   7.5
+		> if we use parentheses `()` to force K to compute the maximum of the list before doing subtraction, we only do a single subtraction instead of 7:
+		```K
+		   ( |/adt ) - &/ adt
+		   ( |/adt ) - 6.7
+		   ( 14.2  ) - 6.7
+		   7.499999999999999
 		```
 		
 		</li>
 		<li>
-		To round to the nearest whole number, either add 0.5 and round down:
-		```APL
-		   ⌊0.5+t_allweek
-		12 9 10 14 7 12 9
-		```
-		
-		or subtract 0.5 and round up:
-		```APL
-		   ⌈t_allweek-0.5
+		To round to the nearest whole number, add 0.5 and round down:
+		```K
+		   _0.5+adt
 		12 9 10 14 7 12 9
 		```
 		</li>
@@ -396,9 +405,9 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 
 	1. $\sum_{n=1}^{100}2n-1$ (add together the first one hundred odd integers)
 
-	1. In TMN, the following expression is equal to `0`, why does the following return `70` in APL?
-		```APL
-		   84 - 12 - 1 - 13 - 28 - 9 - 6 - 15  
+	1. In TMN, the following expression is equal to `0`, why does the following return `70` in K?
+		```K
+		   84 - 12 - 1 - 13 - 28 - 9 - 6 - 15
 		```
 		```
 		70
@@ -409,47 +418,50 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 	??? Example "Answers"
 		<ol type="a">
 		<li>
-		```APL
-		   ×/⍳12
-     479001600
+		```K
+		   */1+!12
+		479001600
 		```
 		</li>
 		<li>
-		```APL
-		   +/(⍳17)*2
-     1785
+		Let's define a `pow` function that raises its left argument to the power of the right argument, and the a `sq` function that squares its argument:
+		```K
+		pow:{*/y#x}
+        sq:pow[;2]
 		```
-		Without parentheses we get the sum of the first 289 integers, instead of the first 17 integers squared.
+		</li>
+		<li>
+		Now we can define our solution in terms of `sq`:
+		```K
+		   +/sq'1+!17
+        1785
+		```
 
-		|TMN|APL|
-		|---|---|
-		|$\sum_n^{17^2} n$|`+/⍳17*2`
-		|$\sum_n^{17} n^2$|`+/(⍳17)*2`|
+		The `'` is the each adverb, which applies the given function to each element in the argument list. We'll cover adverbs later.
 
 		</li>
 		<li>
-		```APL
-		   +/2×⍳100
-     10100
+		```K
+		   +/2*1+!100
+        10100
 		```
 		</li>
 		<li>
 		We can either subtract 1 from the even numbers:
-		```APL
-		   +/(2×⍳100)-1
+		```K
+		   +/(2*1+!100)-1
 		10000
 		```
 
 		or we can add negative 1:
-		```APL
-		   +/¯1+2×⍳100
-     10000
+		```K
+		   +/-1+2*1+!100
+        10000
 		```
-		The high minus denotes a literal negative, whereas the hyphen indicates subtraction.
 		</li>
 		<li>
 		Remember the right-to-left rule: functions take everything to their right, and the first thing to their left. We can add unnecessary parentheses to show how APL evaluates our expression.
-		```APL
+		```K
 		   (84 - (12 - (1 - (13 - (28 - (9 - (6 - 15)))))))
 	    70
 		```
@@ -482,15 +494,17 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		<ol type="a">
 		<li>
 		Each $n$th layer has $n^2$ cubes. There are $34,058,310$ cubes in a stack with $467$ layers.
-		```APL
-			+/(⍳4)*2
+		```K
+		   pow:{*/y#x}
+		   sq:pow[;2]
+		   +/sq'1+!4
 		```
 		```
 		30
 		```
 		---
-		```APL
-			+/(⍳467)*2
+		```K
+			+/sq'1+!467
 		```
 		```
 		34058310
@@ -498,15 +512,15 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		</li>
 		<li>
 		Each $n$th layer has $(2n-1)^2$ cubes. There are $713,849,500$ cubes in a stack with $812$ layers.
-		```APL
-			+/(¯1+2×⍳4)*2
+		```K
+			+/sq'-1+2*1+!4
 		```
 		```
 		84
 		```
 		---
-		```APL
-			+/(¯1+2×⍳812)*2
+		```K
+			+/sq'-1+2*1+!812
 		```
 		```
 		713849500
@@ -514,15 +528,16 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		</li>
 		<li>
 		Each $n$th layer has $n^3$ cubes. There are $5,503,716$ cubes in a stack with $68$ layers.
-		```APL
-			+/(⍳3)*3
+		```K
+		   cubed:pow[;3]
+		   +/cubed'1+!3
 		```
 		```
 		36
 		```
 		---
-		```APL
-			+/(⍳68)*3
+		```K
+			+/cubed'1+!68
 		```
 		```
 		5503716
@@ -531,15 +546,15 @@ A `VALUE ERROR` means that there is nothing associated with the name provided. W
 		</ol>
 
 1. Rewrite the following expressions so that they do not use parentheses.
-	1. `(÷a)×b`
-	1. `(÷a)÷b`
+	1. `(%a)*b`
+	1. `(%a)%b`
 	1. `(a+b)-5`
 	1. `(a+b)+5`
 
 	???Example "Answers"
 		<ol type="a">
-		<li>Multiplication is commutative, which means that the order of arguments does not matter, so we can write `b×÷a`. Even more simply, it is `b÷a` because multiplication by a reciprocal is the same as division.</li>
-		<li>${{{1}\over{a}}\div{b}} = {{1}\over{a\times{b}}}$ so we can write `÷a×b`</li>
+		<li>Multiplication is commutative, which means that the order of arguments does not matter, so we can write `b*%a`. Even more simply, it is `b%a` because multiplication by a reciprocal is the same as division.</li>
+		<li>${{{1}\over{a}}\div{b}} = {{1}\over{a\times{b}}}$ so we can write `%a*b`</li>
 		<li>Use a literal negative five:`¯5+a+b`</li>
 		<li>No parentheses needed: `a+b+5`</li>
 		</ol>
