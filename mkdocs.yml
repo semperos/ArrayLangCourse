@@ -68,6 +68,7 @@ nav:
       - Further Reading: dyalog/Reading.md
   - "BQN":
       - bqn/basic-syntax-and-arithmetic.md
+      - bqn/fns-and-assignment.md
   - J:
       - j/basic-syntax-and-arithmetic.md
   - K:

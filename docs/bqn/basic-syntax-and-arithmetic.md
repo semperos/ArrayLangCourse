@@ -597,3 +597,8 @@ We have not seen any named functions or variables yet; nothing has been assigned
 		<li>Use a literal negative five:`¯5+a+b`</li>
 		<li>No parentheses needed: `a+b+5`</li>
 		</ol>
+
+## Further Resources
+
+* [Tutorial: BQN expressions](https://mlochbaum.github.io/BQN/tutorial/expression.html)
+* [Expression Syntax](https://mlochbaum.github.io/BQN/tutorial/expression.html)
