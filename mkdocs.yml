@@ -71,5 +71,6 @@ nav:
       - bqn/fns-and-assignment.md
   - J:
       - j/basic-syntax-and-arithmetic.md
+      - j/verbs-and-assignment.md
   - K:
       - k/basic-syntax-and-arithmetic.md
