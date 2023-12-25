@@ -4,14 +4,14 @@
 K has two-argument, infix functions. These are called <dfn>dyadic</dfn> functions.
 
 ```K
-   3 * 5
+ 3 * 5
 ```
 ```
 15
 ```
 ---
 ```K
-   3 - 5
+ 3 - 5
 ```
 ```
 -2
@@ -19,7 +19,7 @@ K has two-argument, infix functions. These are called <dfn>dyadic</dfn> function
 
 Some functions map between elements of their left and right argument arrays. It is easy to add lists of numbers together:
 ```K
-   1 2 3 + 4 5 6
+ 1 2 3 + 4 5 6
 ```
 ```
 5 7 9
@@ -28,7 +28,7 @@ Some functions map between elements of their left and right argument arrays. It 
 Unlike APL, BQN, and J, K does not have a different symbol for negative numbers and subtraction; both rely on `-`.
 
 ```K
-   1 2 3 - 1 0 -1
+ 1 2 3 - 1 0 -1
 ```
 ```
 0 2 4
@@ -36,14 +36,14 @@ Unlike APL, BQN, and J, K does not have a different symbol for negative numbers 
 
 There are also one-argument, prefix functions. These are called <dfn>monadic</dfn> functions.
 ```K
-   - 5 -3 0 -4 2
+ - 5 -3 0 -4 2
 ```
 ```
 -5 3 0 4 -2
 ```
 ---
 ```K
-   | 1 2 3 4 5
+ | 1 2 3 4 5
 ```
 ```
 5 4 3 2 1
@@ -69,14 +69,14 @@ Most symbols represent both a monadic and a dyadic function, but these are often
 ## Singleton extension
 Dyadic functions can map between a single value and an array of values.
 ```K
-   3 * 1 10 100
+ 3 * 1 10 100
 ```
 ```
 3 30 300
 ```
 ---
 ```K
-   3 = 1 2 3 4 5
+ 3 = 1 2 3 4 5
 ```
 ```
 0 0 1 0 0
@@ -90,7 +90,7 @@ Dyadic functions can map between a single value and an array of values.
 While experimenting, you may cause a `'length` error:
 
 ```K
-   1 2+3 4 5
+ 1 2+3 4 5
 ```
 ```
 'length
@@ -104,7 +104,7 @@ Functions such as `+ * >` apply between elements of two arrays of the same shape
 Expressions are executed from right to left.
 
 ```K
-   10*!2+5
+ 10*!2+5
 ```
 ```
 0 10 20 30 40 50 60
@@ -113,31 +113,31 @@ Expressions are executed from right to left.
 ??? Info "Show me step-by-step"
 	To start, there is a literal number 5:
 	```K
-	   5
+	 5
 	5
 	```
 	
 	Next, there is a plus `+` with a number 2 to its immediate left, so it is evaluated as two plus five:
 	```K
-	   2+5
+	 2+5
 	7
 	```
 	
 	Then the symbol <dfn>enum</dfn> `!`. To its left is another function, multiply `*`, not a value. So the function is called <em>monadically</em>. The monadic form of `!` is the <dfn>index generator</dfn>, which generates an integer array of length defined by its right argument.
 	```
-	   !2+5
+	 !2+5
 	0 1 2 3 4 5 6
 	```
 	
 	Lastly, another dyadic function, we multiply our list by ten:
 	```
-	   10*!2+5
+	 10*!2+5
 	0 10 20 30 40 50 60
 	```
 
 The expression above is "ten *times* the indices from 0 to *two plus five*, or in short: "ten times enum two plus five". We can make it clearer using (superfluous) **parentheses** `()`.
 ```K
-   10*(!(2+5))
+ 10*(!(2+5))
 ```
 ```
 0 10 20 30 40 50 60
@@ -146,7 +146,7 @@ The expression above is "ten *times* the indices from 0 to *two plus five*, or i
 Of course, we can change the order of execution using different parentheses.
 
 ```K
-   (10*!2)+5
+ (10*!2)+5
 ```
 ```
 5 15
@@ -155,7 +155,7 @@ Of course, we can change the order of execution using different parentheses.
 ??? Info "Show me step-by-step"
 	Beginning from the right, there is a literal number 5:
 	```K
-	   (10*!2)+5
+	 (10*!2)+5
 	        5
 	```
 	
@@ -168,14 +168,14 @@ Of course, we can change the order of execution using different parentheses.
 	A right parenthesis. We must evaluate the contents of the parentheses to see if it is a function or a value.
 	
 	```K
-	   (10*!2)
+	 (10*!2)
 	```
 	
 	This expression evaluates to the list `0 10`. Since it is a value, it is used as the left argument to our plus function.
 	
 	```K
-	   (10*!2)+5
-	   (0  10)+5
+	 (10*!2)+5
+	 (0  10)+5
 	5 15
 	```
 
@@ -186,14 +186,14 @@ If there is one, the left argument is the value to the <em>immediate</em> left.
 However, juxtaposed values form lists <em>before</em> any functions are applied. This is called <dfn>stranding</dfn> and lets us write very natural expressions, such as:
 
 ```K
-   1 2 3 + 4 5 6
+ 1 2 3 + 4 5 6
 5 7 9
 ```
 
 but this can lead to some surprises if we are not aware:
 
 ```K
-   2 + 2 2 + 2
+ 2 + 2 2 + 2
 ```
 ```
 6 6
@@ -202,41 +202,41 @@ but this can lead to some surprises if we are not aware:
 ??? Info "Show me step-by-step"
 	First, there is a literal number 2
 	```K
-	          2
+	        2
 	2
 	```
 	
 	Then there is a symbol `+`. What, if any, is the value to its immediate left?
 	```K
-	       2 2 + 2
+	     2 2 + 2
 	```
 	
 	It is a 2-element vector `2 2`. The plus function maps between these elements and the single number on the right:
 	```K
-	       2 2 + 2
+	     2 2 + 2
 	4 4
 	```
 	
 	Finally there is another addition. The overall evaluation looks like the following:
 	```K
-	   2 + 2 2 + 2
-	   2 + 4 4
-	   6 6
+	 2 + 2 2 + 2
+	 2 + 4 4
+	 6 6
 	```
 
 ## Comments
 Anything after a forward slash `/` is ignored.
 
 ```K
-   / nothing happens on this line
-   2 * 3 / 4 5
+ / nothing happens on this line
+ 2 * 3 / 4 5
 ```
 ```
 6
 ```
 ---
 ```K
-   "A"   / K uses double quotes for single char
+ "A"   / K uses double quotes for single char
 ```
 ```
 "A"
@@ -245,7 +245,7 @@ Anything after a forward slash `/` is ignored.
 ## The reduction operator
 Adding a list of numbers *could* become very tedious...
 ```K
-   1+2+3+4+5+6+7+8+9+10+11+12+13+14+15
+ 1+2+3+4+5+6+7+8+9+10+11+12+13+14+15
 ```
 ```
 120
@@ -253,7 +253,7 @@ Adding a list of numbers *could* become very tedious...
 
 The **fold** [operator](./Operators.md) `F/` inserts the function `F` to its left between parts of the right argument array.
 ```K
-   +/1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+ +/1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 ```
 ```
 120
@@ -265,7 +265,7 @@ Fold is also known as *reduce* because it reduces the number of dimensions of it
 The index generator `!i` generates integers up to the integer right argument `i`
 
 ```K
-   !10
+ !10
 ```
 ```
 0 1 2 3 4 5 6 7 8 9
@@ -286,7 +286,7 @@ In the APL and BQN versions of this lesson, a negative number passed as the righ
 In K, `!i` simply extends the domain to negative numbers and continues to return a monotonically increasing array with `i` as the starting point:
 
 ```K
-   !-4
+ !-4
 ```
 ```
 -4 -3 -2 -1
@@ -295,7 +295,7 @@ In K, `!i` simply extends the domain to negative numbers and continues to return
 Here's another behavior you might encounter:
 
 ```K
-   1+
+ 1+
 ```
 ```
 1+
@@ -304,7 +304,7 @@ Here's another behavior you might encounter:
 What is this? We can use <dfn>type</dfn> `@` to interrogate the type:
 
 ```K
-   @(1+)
+ @(1+)
 ```
 ```
 `p
@@ -315,7 +315,7 @@ The symbol `\`p` represents a <dfn>projection</dfn>, which is a partially applie
 Here's an actual error you might encounter:
 
 ```K
-   a
+ a
 ```
 ```
 'value
@@ -330,7 +330,7 @@ A `'value` means that there is nothing associated with the name provided. We hav
 	The average daily temperatures, in degrees Celcius, for 7 days are stored in a variable `adt`. Note that unlike in APL, BQN, and J for which we named this variable `t_allweek`, K does not permit `_` in symbols because it's a built-in function.
 	
 	```K
-	adt:11.7 8.6 9.7 14.2 6.7 11.8 9.2
+	 adt:11.7 8.6 9.7 14.2 6.7 11.8 9.2
 	```
 	
 	Use K to compute the follwing:
@@ -344,50 +344,50 @@ A `'value` means that there is nothing associated with the name provided. We hav
 		<ol type="a">
 		<li>
 		```K
-		   |/adt
+		 |/adt
 		14.2
 		```
 		</li>
 		<li>
 		```K
-		   &/adt
+		 &/adt
 		6.7
 		```
 		</li>
 		<li>
 		```K
-		   (|/adt)-&/adt
+		 (|/adt)-&/adt
 		7.499999999999999
 		```
 		
 		> You may have found the correct answer using the following expression:
 		```K
-		   |/adt-&/adt
+		 |/adt-&/adt
 		7.499999999999999
 		```
 		
 		> but this is less efficient because it does more subtractions than it needs to. Recall the right-to-left evaluation:
 		```K
-		   |/ adt - &/ adt
-		   |/ adt - 6.7
-		   |/ 11.7 8.6 9.7 14.2 6.7 11.8 9.2 - 6.7
-		   |/ 5 1.9 3 7.5 0 5.1 2.5
-		   7.5
+		 |/ adt - &/ adt
+		 |/ adt - 6.7
+		 |/ 11.7 8.6 9.7 14.2 6.7 11.8 9.2 - 6.7
+		 |/ 5 1.9 3 7.5 0 5.1 2.5
+		 7.5
 		```
 		
 		> if we use parentheses `()` to force K to compute the maximum of the list before doing subtraction, we only do a single subtraction instead of 7:
 		```K
-		   ( |/adt ) - &/ adt
-		   ( |/adt ) - 6.7
-		   ( 14.2  ) - 6.7
-		   7.499999999999999
+		 ( |/adt ) - &/ adt
+		 ( |/adt ) - 6.7
+		 ( 14.2  ) - 6.7
+		 7.499999999999999
 		```
 		
 		</li>
 		<li>
 		To round to the nearest whole number, add 0.5 and round down:
 		```K
-		   _0.5+adt
+		 _0.5+adt
 		12 9 10 14 7 12 9
 		```
 		</li>
@@ -395,7 +395,7 @@ A `'value` means that there is nothing associated with the name provided. We hav
 
 1. A Mathematical Notation
 
-	Use APL to evaluate the following
+	Use K to evaluate the following
 
 	1. $\prod_{n=1}^{12} n$ (multiply together the first twelve integers)
 
@@ -407,7 +407,7 @@ A `'value` means that there is nothing associated with the name provided. We hav
 
 	1. In TMN, the following expression is equal to `0`, why does the following return `70` in K?
 		```K
-		   84 - 12 - 1 - 13 - 28 - 9 - 6 - 15
+		 84 - 12 - 1 - 13 - 28 - 9 - 6 - 15
 		```
 		```
 		70
@@ -419,21 +419,21 @@ A `'value` means that there is nothing associated with the name provided. We hav
 		<ol type="a">
 		<li>
 		```K
-		   */1+!12
+		 */1+!12
 		479001600
 		```
 		</li>
 		<li>
 		Let's define a `pow` function that raises its left argument to the power of the right argument, and the a `sq` function that squares its argument:
 		```K
-		pow:{*/y#x}
-        sq:pow[;2]
+		 pow:{*/y#x}
+         sq:pow[;2]
 		```
 		</li>
 		<li>
 		Now we can define our solution in terms of `sq`:
 		```K
-		   +/sq'1+!17
+		 +/sq'1+!17
         1785
 		```
 
@@ -442,27 +442,27 @@ A `'value` means that there is nothing associated with the name provided. We hav
 		</li>
 		<li>
 		```K
-		   +/2*1+!100
+		 +/2*1+!100
         10100
 		```
 		</li>
 		<li>
 		We can either subtract 1 from the even numbers:
 		```K
-		   +/(2*1+!100)-1
+		 +/(2*1+!100)-1
 		10000
 		```
 
 		or we can add negative 1:
 		```K
-		   +/-1+2*1+!100
+		 +/-1+2*1+!100
         10000
 		```
 		</li>
 		<li>
 		Remember the right-to-left rule: functions take everything to their right, and the first thing to their left. We can add unnecessary parentheses to show how APL evaluates our expression.
 		```K
-		   (84 - (12 - (1 - (13 - (28 - (9 - (6 - 15)))))))
+		 (84 - (12 - (1 - (13 - (28 - (9 - (6 - 15)))))))
 	    70
 		```
 		</li>
@@ -495,16 +495,16 @@ A `'value` means that there is nothing associated with the name provided. We hav
 		<li>
 		Each $n$th layer has $n^2$ cubes. There are $34,058,310$ cubes in a stack with $467$ layers.
 		```K
-		   pow:{*/y#x}
-		   sq:pow[;2]
-		   +/sq'1+!4
+		 pow:{*/y#x}
+		 sq:pow[;2]
+		 +/sq'1+!4
 		```
 		```
 		30
 		```
 		---
 		```K
-			+/sq'1+!467
+		/sq'1+!467
 		```
 		```
 		34058310
@@ -513,14 +513,14 @@ A `'value` means that there is nothing associated with the name provided. We hav
 		<li>
 		Each $n$th layer has $(2n-1)^2$ cubes. There are $713,849,500$ cubes in a stack with $812$ layers.
 		```K
-			+/sq'-1+2*1+!4
+		 /sq'-1+2*1+!4
 		```
 		```
 		84
 		```
 		---
 		```K
-			+/sq'-1+2*1+!812
+		 +/sq'-1+2*1+!812
 		```
 		```
 		713849500
@@ -529,15 +529,15 @@ A `'value` means that there is nothing associated with the name provided. We hav
 		<li>
 		Each $n$th layer has $n^3$ cubes. There are $5,503,716$ cubes in a stack with $68$ layers.
 		```K
-		   cubed:pow[;3]
-		   +/cubed'1+!3
+		 cubed:pow[;3]
+		 +/cubed'1+!3
 		```
 		```
 		36
 		```
 		---
 		```K
-			+/cubed'1+!68
+		 +/cubed'1+!68
 		```
 		```
 		5503716
