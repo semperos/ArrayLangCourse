@@ -105,10 +105,10 @@ The following problems can be solved with single-line dfns.
     ```
 
     ???Example "Answer"
-    ```K
-     / Play with -_- step by step to see how it implements ceiling
-     eggs:{-_-x*3%4}
-    ```
+        ```K
+         / Play with -_- step by step to see how it implements ceiling
+         eggs:{-_-x*3%4}
+        ```
 	
 
 1.  Write a function `to` which returns integers from `x` to `y` inclusive.
@@ -136,12 +136,13 @@ The following problems can be solved with single-line dfns.
     ```
 
     ???Example "Answer"
-    In the simple case, make sure to generate enough numbers and use `⍺` as an offset:
-    ```K
-     to:{x+!1+y-x}
-    ```
+        In the simple case, make sure to generate enough numbers and use `x` as an offset:
+        ```K
+         to:{x+!1+y-x}
+        ```
+
     In general we take into account whether the difference is positive or negative. In K, there are no builtins for absolute value or signum, so we define these as well:
-    TODO START HERE
+    
     ```K
      signum:{(x>0)-x<0}
      abs:{$[x<0;x*-1;x]}
@@ -154,30 +155,32 @@ The following problems can be solved with single-line dfns.
 
     Write the function `CtoF` to convert temperatures from Celcius to Farenheit.
 
-    ```APL
-       CtoF 11.3 23 0 16 ¯10 38
+    ```K
+     CtoF 11.3 23 0 16 -10 38
     52.34 73.4 32 60.8 14 100.4
     ```
 
     ???Example "Answer"
-    `APL
-	CtoF ← {32+⍵×9÷5}
-	`
+        ```K
+         CtoF:{32+x*9%5}
+        ```
 
 1.  Prime Time
 
     A prime number is a positive whole number greater than $1$ which can be divided only by itself and $1$ with no remainder.
 
-    Write a dfn which returns `1` if its argument is prime and `0` otherwise.
+    Write a verb which returns `1` if its argument is prime and `0` otherwise.
 
-         IsPrime 21
-     0
-         IsPrime 17
-     1
+    ```K
+     isPrime 21
+    0
+     isPrime 17
+    1
+    ```
 
     ???Example "Answer"
-    There are several ways to code this, but the basic method is to count the number of divisors.
-    `APL
-	IsPrime ← {2=+/d=⌊d←⍵÷⍳⍵}
-	IsPrime ← {2=+/0=(⍳⍵)|⍵}
-	`
+        There are several ways to code this, but the basic method is to count the number of divisors.
+        ```K
+         isPrime:{2=+/d=_d:x%1+!x}
+         isPrime:{2=+/0=(1+!x)!'x}
+        ```

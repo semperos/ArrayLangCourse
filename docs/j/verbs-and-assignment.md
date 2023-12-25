@@ -1,4 +1,4 @@
-# Verb, Direct Definition, and Assignment
+# Verbs, Direct Definition, and Assignment
 
 ## Verbs and Direct Definition
 In J, normal functions—those that take noun arguments and produce noun results—are called <dfn>verbs</dfn>.
@@ -92,7 +92,7 @@ The following problems can be solved with single-line dfns.
 	```
 	---
 	```J
-	   Eggs ⍳12
+	   eggs ⍳12
 	```
 	```
 	1 2 3 3 4 5 6 6 7 8 9 9
