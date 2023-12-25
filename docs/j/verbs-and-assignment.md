@@ -1,4 +1,4 @@
-# Verbs, Direct Definition, and Assignment
+# Verbs and Assignment
 
 ## Verbs and Direct Definition
 In J, normal functions—those that take noun arguments and produce noun results—are called <dfn>verbs</dfn>.
