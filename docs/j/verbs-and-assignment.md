@@ -52,9 +52,11 @@ Unlike APL and BQN, in J you are free to redefine names with new values of any t
 ## Multiline functions and the editor
 You can do quite a lot in a single line of J. However, it is not long before you want to keep sequences of multiple statements available for re-use. Of course we can write verbs which consist of multiple statements.
 
-The <dfn>left</dfn> verb, `[` (diamond), allows us to write multiple J statements in a single line, but unlike APL and BQN's diamond separator, evaluation occurs right-to-left.
+You can separate each statement by a newline. Lines are evaluated top to bottom.
 
-Some people think that it is more readable to spread multiple statements across multiple lines of a verb. The following two definitions of the `mean` verb are equivalent.
+The <dfn>left</dfn> verb `[` allows us to write multiple J statements in a single line, but unlike APL and BQN's diamond separator, evaluation occurs right-to-left.
+
+The following two definitions of the `mean` verb are equivalent.
 
 ```APL
  mean =. {{
@@ -73,7 +75,7 @@ The following problems can be solved with single-line dfns.
 
 1. Eggs
 
-	A recipe serving 4 people uses 3 eggs. Write the function `Eggs` which computes the number of eggs which need cracking to serve `⍵` people. Using a fraction of an egg requires that a whole egg be cracked.
+	A recipe serving 4 people uses 3 eggs. Write the function `eggs` which computes the number of eggs which need cracking to serve `y` people. Using a fraction of an egg requires that a whole egg be cracked.
 
 	```J
 	   eggs 4
