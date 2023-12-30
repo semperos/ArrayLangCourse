@@ -69,6 +69,7 @@ nav:
   - "BQN":
       - bqn/basic-syntax-and-arithmetic.md
       - bqn/fns-and-assignment.md
+      - bqn/array-logic-data-driven-conditionals.md
   - J:
       - j/basic-syntax-and-arithmetic.md
       - j/verbs-and-assignment.md
