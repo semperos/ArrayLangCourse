@@ -63,8 +63,117 @@ Some of these are more general mathematical functions which happen to be the sam
 0 1 1 0
 ```
 
-!!!Info
-	The [16 possible logic functions for two binary variables](https://en.wikipedia.org/wiki/Truth_table#Binary_operations) can all be expressed succinctly in APL, as shown in the [notebook](https://nbviewer.org/github/Dyalog/dyalog-jupyter-notebooks/blob/master/Boolean%20Scans%20and%20Reductions.ipynb#Sixteen-logical-functions) and [webinar](https://dyalog.tv/Webinar/?v=erv_1LxEByk) on Boolean scans and reductions.
+??? Info "Logic Functions"
+	The [16 possible logic functions for two binary variables](https://en.wikipedia.org/wiki/Truth_table#Binary_operations) can all be expressed succinctly in APL. There is a [webinar](https://dyalog.tv/Webinar/?v=erv_1LxEByk) on Boolean scans and reductions, and the following table has been adapted and corrected from [this notebook](https://nbviewer.org/github/Dyalog/dyalog-jupyter-notebooks/blob/master/Boolean%20Scans%20and%20Reductions.ipynb#Sixteen-logical-functions):
+	
+    <table>
+    <thead>
+    <tr>
+      <th >Binary</th>
+      <th>Decimal <code>2⊥</code></th>
+      <th>Function <code>f</code></th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><code>0 0 0 0</code></td>
+      <td><code>0</code></td>
+      <td><code>0⍨</code></td>
+      <td>FALSE</td>
+    </tr>
+    <tr>
+      <td><code>0 0 0 1</code></td>
+      <td><code>1</code></td>
+      <td><code>∧</code></td>
+      <td>AND</td>
+    </tr>
+    <tr>
+      <td><code>0 0 1 0</code></td>
+      <td><code>2</code></td>
+      <td><code>&gt;</code></td>
+      <td>Left but not right</td>
+    </tr>
+    <tr>
+      <td><code>0 0 1 1</code></td>
+      <td><code>3</code></td>
+      <td><code>⊣</code></td>
+      <td>Left</td>
+    </tr>
+    <tr>
+      <td><code>0 1 0 0</code></td>
+      <td><code>4</code></td>
+      <td><code>&lt;</code></td>
+      <td>Right but not left</td>
+    </tr>
+    <tr>
+      <td><code>0 1 0 1</code></td>
+      <td><code>5</code></td>
+      <td><code>⊢</code></td>
+      <td>Right</td>
+    </tr>
+    <tr>
+      <td><code>0 1 1 0</code></td>
+      <td><code>6</code></td>
+      <td><code>≠</code></td>
+      <td>Exlusive OR</td>
+    </tr>
+    <tr>
+      <td><code>0 1 1 1</code></td>
+      <td><code>7</code></td>
+      <td><code>∨</code></td>
+      <td>OR</td>
+    </tr>
+    <tr>
+      <td><code>1 0 0 0</code></td>
+      <td><code>8</code></td>
+      <td><code>⍱</code></td>
+      <td>NOR</td>
+    </tr>
+    <tr>
+      <td><code>1 0 0 1</code></td>
+      <td><code>9</code></td>
+      <td><code>=</code></td>
+      <td>Exclusive NOR</td>
+    </tr>
+    <tr>
+      <td><code>1 0 1 0</code></td>
+      <td><code>10</code></td>
+      <td><code>~⍤⊢</code></td>
+      <td>Not right</td>
+    </tr>
+    <tr>
+      <td><code>1 0 1 1</code></td>
+      <td><code>11</code></td>
+      <td><code>≥</code></td>
+      <td>Left OR not right</td>
+    </tr>
+    <tr>
+      <td><code>1 1 0 0</code></td>
+      <td><code>12</code></td>
+      <td><code>~⍤⊣</code></td>
+      <td>Not left</td>
+    </tr>
+    <tr>
+      <td><code>1 1 0 1</code></td>
+      <td><code>13</code></td>
+      <td><code>≤</code></td>
+      <td>Right OR not left</td>
+    </tr>
+    <tr>
+      <td><code>1 1 1 0</code></td>
+      <td><code>14</code></td>
+      <td><code>⍲</code></td>
+      <td>NAND</td>
+    </tr>
+    <tr>
+      <td><code>1 1 1 1</code></td>
+      <td><code>15</code></td>
+      <td><code>1⍨</code></td>
+      <td>TRUE</td>
+    </tr>
+    </tbody>
+    </table>	
 
 ## The shape of data
 One of the distinguishing features of APL is the multidimensional array. Single elements, lists and tables are quite familiar constructs.
@@ -102,9 +211,9 @@ The following table lists the <dfn>rank</dfn> (number of dimensions), some commo
 
 |Rank|Name|Geometric analogy|diagram|
 |---|---|---|---|
-|$0$|scalar|point|![point geometry diagram](./img/point.svg)|
-|$1$|vector or list|line|![line geometry diagram](./img/line.svg)|
-|$2$|matrix or table|rectangle|![rectangle geometry diagram](./img/rectangle.svg)|
+|$0$|scalar|point|![point geometry diagram](../img/point.svg)|
+|$1$|vector or list|line|![line geometry diagram](../img/line.svg)|
+|$2$|matrix or table|rectangle|![rectangle geometry diagram](../img/rectangle.svg)|
 
 Arrays with $3$ or more dimensions are sometimes called <dfn>cube</dfn> or <dfn>cuboid</dfn>, but they are generally referred to as <dfn>N-dimensional arrays</dfn>, <dfn>rank-N arrays</dfn> or <dfn>high rank arrays</dfn>. Arrays of rank greater than $3$ are sometimes called <dfn>noble arrays</dfn>.
 
