@@ -22,28 +22,28 @@ BQN has logical and comparison functions as in-built primitives. Much like the a
 Some of these are more general mathematical functions which happen to be the same as logical functions when used with Booleans (`1`s and `0`s). Unlike APL, in BQN the `∧` and `∨` primitives do not provide LCM and GCD respectively (see [Why not GCD and LCM?](https://mlochbaum.github.io/BQN/doc/logic.html#why-not-gcd-and-lcm) for details).
 
 ```BQN
-      0‿1‿0‿1 ∧ 0‿0‿1‿1   # Logical AND
+   0‿1‿0‿1 ∧ 0‿0‿1‿1   # Logical AND
 ```
 ```
 ⟨ 0 0 0 1 ⟩
 ```
 ---
 ```BQN
-      0‿1‿0‿1 ∨ 0‿0‿1‿1   # Logical OR
+   0‿1‿0‿1 ∨ 0‿0‿1‿1   # Logical OR
 ```
 ```
 ⟨ 0 1 1 1 ⟩
 ```
 ---
 ```BQN
-      'P' ≠ 'Q'           # Not equal to
+   'P' ≠ 'Q'           # Not equal to
 ```
 ```
 1
 ```
 ---
 ```BQN
-      0‿1‿0‿1 ≠ 0‿0‿1‿1   # Logical XOR 
+   0‿1‿0‿1 ≠ 0‿0‿1‿1   # Logical XOR 
 ```
 ```
 ⟨ 0 1 1 0 ⟩
@@ -52,7 +52,7 @@ Some of these are more general mathematical functions which happen to be the sam
 ??? Info "Logic Functions"
 	The [16 possible logic functions for two binary variables](https://en.wikipedia.org/wiki/Truth_table#Binary_operations) can all be expressed succinctly in BQN. The following explanation and table have been adapted from an APL version found in [this notebook](https://nbviewer.org/github/Dyalog/dyalog-jupyter-notebooks/blob/master/Boolean%20Scans%20and%20Reductions.ipynb#Sixteen-logical-functions).
 	
-	The binary column here represets the output of the logic gate for all combinations of two 1-bit inputs — also known as the truth table. For example, the truth table for an OR gate:
+ 	The binary column here represets the output of the logic gate for all combinations of two 1-bit inputs — also known as the truth table. For example, the truth table for an OR gate:
 
     >        0‿0‿1‿1 ∨ 0‿1‿0‿1
     >  ⟨ 0 1 1 1 ⟩
@@ -175,7 +175,7 @@ One of the distinguishing features of BQN is the multidimensional array. Single 
 Tables are very useful for representing data which is related in some way. For example, let's say that the price of oranges changes daily. We can represent a week of prices as a 7-element numeric list.
 
 ```BQN
-0.35‿0.3‿0.33‿0.32‿0.39‿0.33‿0.36
+   0.35‿0.3‿0.33‿0.32‿0.39‿0.33‿0.36
 ```
 
 How about the amount spent on 3 items? We could store this in 3 separate lists, but it is convenient to keep it in a table with 3 rows and 7 columns.
@@ -183,7 +183,7 @@ How about the amount spent on 3 items? We could store this in 3 separate lists, 
 The <dfn>reshape</dfn> function `𝕨⥊𝕩` takes data from `𝕩` and uses it to fill out an array of shape `𝕨`, one row at a time.
 
 ```BQN
-      cost ← 3‿7⥊4.36‿4.22‿4.05‿4.14‿4.18‿4.19‿4.02‿2.79‿2.58‿2.68‿2.77‿2.88‿2.79‿2.52‿3.07‿3‿3.13‿3‿3.24‿3.06‿3.29
+   cost ← 3‿7⥊4.36‿4.22‿4.05‿4.14‿4.18‿4.19‿4.02‿2.79‿2.58‿2.68‿2.77‿2.88‿2.79‿2.52‿3.07‿3‿3.13‿3‿3.24‿3.06‿3.29
 ```
 ```
 ┌─                                    
@@ -198,7 +198,7 @@ So what is this table that we have created? In other languages, there are lists,
 The <dfn>shape</dfn> function `≢𝕩` returns the shape of its argument.
 
 ```BQN
-      ≢4‿12‿31
+   ≢4‿12‿31
 3
 ```
 
@@ -214,14 +214,14 @@ Arrays with $3$ or more dimensions are sometimes called <dfn>cube</dfn> or <dfn>
 
 For our `cost` matrix, the total spent on each item is a row-wise sum, or put a different way, the sum of each major cell:
 ```BQN
-      +´˘cost    # The total cost over the week
+   +´˘cost    # The total cost over the week
 ```
 ```
 ⟨ 29.16 19.009999999999998 21.79 ⟩
 ```
 ---
 ```BQN
-      ≢+´˘cost   # For 3 items. Shape is always an array.
+   ≢+´˘cost   # For 3 items. Shape is always an array.
 ```
 ```
 ⟨ 3 ⟩
@@ -230,329 +230,356 @@ For our `cost` matrix, the total spent on each item is a row-wise sum, or put a 
 The total for each day across all items is a column-wise sum:
 
 ```BQN
-      +˝cost    # The total cost of 3 items
+   +˝cost    # The total cost of 3 items
 ```
 ```
 ⟨ 10.219999999999999 9.8 9.86 9.91 10.3 10.04 9.83 ⟩
 ```
 ---
 ```BQN
-      ≢+˝cost   # Over 7 days
+   ≢+˝cost   # Over 7 days
 ```
 ```
 ⟨ 7 ⟩
 ```
 
-## Ravel means unravel :thread:
-Monadic comma is the function <dfn>ravel</dfn> `,⍵` and it lays out the elements of an array as a vector, one row at a time — a bit like pulling thread from a spool.
+## Shape and Deshape
+When called monadically, the `⥊` primitive is called <dfn>deshape</dfn>. It removes shape information from the array and lays out all the elements in a vector in index order.
 
-```APL
-      mat ← 3 3⍴⎕A
-      mat
+```BQN
+   abc ← 'A' + ↕26
+   3‿3⥊abc
 ```
 ```
-ABC
-DEF
-GHI
+┌─     
+╵"ABC  
+  DEF  
+  GHI" 
+      ┘
 ```
 ---
-```APL
-      ,mat
+```BQN
+   ⥊3‿3⥊abc
 ```
 ```
 ABCDEFGHI
 ```
 
-## The outer product
-The "outer product" `∘.F` operator applies its function operand `F` between all combinations of elements of its left and right argument arrays. 
+## The table modifier
+The <dfn>table</dfn> modifier `⌜` applies its function operand `𝔽` between all combinations of elements of its left and right argument arrays. 
 
-```APL
-      F ← {⍺+⍵}
-      1 2 3 ∘.F 10 20 30
+```BQN
+   F ← {𝕨+𝕩}
+   1‿2‿3 F⌜ 10‿20‿30
 ```
 ```
-11 21 31
-12 22 32
-13 23 33
+┌─          
+╵ 11 21 31  
+  12 22 32  
+  13 23 33  
+           ┘
 ```
 
-For example, the catenate function `⍺,⍵` (comma) will join two lists together. We can use the outer product to join combinations of words from two lists. 
+For example, the join function `∾`  will join two lists together. We can use the outer product to join combinations of words from two lists. 
 
-```APL
-      1 4 9 , 6 5 4
+```BQN
+   1 4 9 , 6 5 4
 ```
 ```
 1 4 9 6 5 4
 ```
 ---
-```APL
-      'joined up' , 'text vectors'
+```BQN
+   "joined up" ∾ "text vectors"
 ```
 ```
-joined uptext vectors
+"joined uptext vectors"
  
 ```
 ---
-```APL
-      'chicken' 'pork' 'vegetable' ∘., ' chow mein' ' with cashew nuts'
+```BQN
+   "chicken"‿"pork"‿"vegetable" ∾⌜ " chow mein"‿" with cashew nuts"
 ```
 ```
-┌───────────────────┬──────────────────────────┐
-│chicken chow mein  │chicken with cashew nuts  │
-├───────────────────┼──────────────────────────┤
-│pork chow mein     │pork with cashew nuts     │
-├───────────────────┼──────────────────────────┤
-│vegetable chow mein│vegetable with cashew nuts│
-└───────────────────┴──────────────────────────┘
+┌─                                                    
+╵ "chicken chow mein"   "chicken with cashew nuts"    
+  "pork chow mein"      "pork with cashew nuts"       
+  "vegetable chow mein" "vegetable with cashew nuts"  
+                                                     ┘
 ```
 
 !!!Question "What are those boxes around the output?"
-	We have just created a <dfn>nested array</dfn>. These are arrays in which each element contains another array more complex than a single number or character. The next section on [multidimensional and nested arrays](./multidimensional-and-nested-arrays.md) introduces them in more detail.
-
-	If you do not see lines around the output of the last expression above in your interpreter session, turn boxing on:
-	```APL
-	      ]box on
-	```
-	```
-	Was OFF
-	```
-	---
-	```APL
-	      ⍳3 3
-	```
-	```
-	┌───┬───┬───┐
-	│1 1│1 2│1 3│
-	├───┼───┼───┤
-	│2 1│2 2│2 3│
-	├───┼───┼───┤
-	│3 1│3 2│3 3│
-	└───┴───┴───┘
-	```
+    In BQN, any value can be used an array element, including others arrays. The next section on [multidimensional and nested arrays](./multidimensional-and-nested-arrays.md) introduces them in more detail.
 
 ## Replicate/Compress
-The <dfn>replicate</dfn> function `⍺/⍵` (yes, some symbols have <a target="_blank" href="https://aplwiki.com/wiki/Function-operator_overloading">multiple meanings</a>) repeats elements of an array along rows.
+The <dfn>replicate</dfn> function `𝕨/𝕩` repeats each major cell in `𝕩` the corresponding number of times specified in `𝕨`.
 
-```APL
-      1 2 3/'ABC'
+```BQN
+   1‿2‿3/"ABC"
 ```
 ```
-ABBCCC
+"ABBCCC"
 ```
 ---
-```APL
-      1 2 3/2 3⍴'DYALOG'
+```BQN
+   a ← 2‿3⥊"APLBQN"
 ```
 ```
-DYYAAA
-LOOGGG
+┌─     
+╵"APL  
+  BQN" 
+      ┘
 ```
 ---
-```APL
-      1 ¯2 3/2 3⍴'DYALOG'
+```BQN
+   1‿2/a
 ```
 ```
-D  AAA
-L  GGG
+┌─     
+╵"APL  
+  BQN  
+  BQN" 
+      ┘
 ```
 
-When used with a Boolean array, the function `⍺/⍵` is called <dfn>compress</dfn>.
+??? Why is this different than APL?
+	BQN's replicate behaves differently than APL's. BQN's replicate repeats each _major cell._
 
-```APL
-      0 1 0/2 3⍴'DYALOG'
+    To replicate (go ahead, roll your eyes) APL's behavior in BQN, we have to modify the replicate function to be applied to each major cell:
+
+	```BQN
+	   b /⎉1 a  # Specifying rank of 1
+       b⊸/˘a    # Using the cells modifier
+	```
+	```
+    ┌─        
+    ╵"APPLLL  
+      BQQNNN" 
+             ┘
+	```
+
+	We'll cover the rank and cells primitives in later lessons.
+
+
+When used with a Boolean array, the replicate function acts like <dfn>filter</dfn>.
+
+```BQN
+   0‿1‿0‿0‿1‿0/"APLBQN"
 ```
 ```
 Y
 O
 ```
 
-Just like the forward-slash `F/` as the *reduction operator* acts along rows and forward-slash-bar `F⌿` reduces down columns*, the replicate `⍺/⍵` and <dfn>replicate-first</dfn> `⍺⌿⍵` functions work along different axes of high rank arrays.
-
-*we will see a fuller description [when we discuss 3D and higher rank arrays](./cells-and-axes.md).
-
 ## Indexing
-In many other programming languages, "[selection](https://www.bbc.co.uk/bitesize/guides/zh66pbk/revision/3)" is used to describe control structures such as "[if then else](https://en.wikipedia.org/wiki/Conditional_(computer_programming)#If%E2%80%93then(%E2%80%93else))" or "[switch case](https://en.wikipedia.org/wiki/Conditional_(computer_programming)#Case_and_switch_statements)". In APL, we can get a similar effect by literally "selecting" elements from arrays. 
+In many other programming languages, "[selection](https://www.bbc.co.uk/bitesize/guides/zh66pbk/revision/3)" is used to describe control structures such as "[if then else](https://en.wikipedia.org/wiki/Conditional_(computer_programming)#If%E2%80%93then(%E2%80%93else))" or "[switch case](https://en.wikipedia.org/wiki/Conditional_(computer_programming)#Case_and_switch_statements)". In BQN, we can get a similar effect by literally "selecting" elements from arrays.
+
+The two means of selection here are the <dfn>select</dfn> function `⊏` and the filtering usage of replicate which we saw earlier.
 
 !!!Info
-	Indexing starts from 1 by default. You can change the index origin by setting `⎕IO←0`, but this course assumes `⎕IO←1`.
+	Indexing starts from 0 by default, unlike APL which starts from 1 by default.
 
-```APL
-      'APPLE'[1 3 4]
+```BQN
+   0‿7‿10⊏"BOILED QUINOA"
 ```
 ```
-APL
+BQN
+```
+---
+```BQN
+   / 1‿0‿0‿1‿0‿1
+```
+```
+⟨ 0 3 5 ⟩
 ```
 ---
 ```APL
-      ⍸ 1 0 0 1 0 1
+   IsDivisibleBy ← {0=𝕩|𝕨}
+   3‿6‿8‿5‿2 IsDivisibleBy 2
 ```
 ```
-1 4 6
-```
----
-```APL
-      IsDivisibleBy ← {0=⍵|⍺}
-      3 6 8 5 2 IsDivisibleBy 2
-```
-```
-0 1 1 0 1
+⟨ 0 1 1 0 1 ⟩
 ```
 ---
-```APL
-      3 6 8 5 2 {⍺[⍸⍺ IsDivisibleBy ⍵]} 2
+```BQN
+   3‿6‿8‿5‿2 {(𝕨 IsDivisibleBy 𝕩)/𝕨} 2
 ```
 ```
-6 8 2
+⟨ 6 8 2 ⟩
 ```
 
 ## Problem set 3
 
 1. Define the numeric vector `nums`
 	
-	```APL
-	nums ← 3 5 8 2 1
+	```BQN
+	   nums ← 3‿5‿8‿2‿1
 	```
 
 	1. Using `nums`, define `mat`
 
-	```APL
-	      mat
+	```BQN
+	   mat
 	```
 	```
-	3 5 8
-	2 1 3
-	```
-
-	1. Using `mat`, define `wide`
-
-	```APL
-	      wide
-	```
-	```
-	3 5 8 3 5 8
-	2 1 3 2 1 3
+    ┌─       
+    ╵ 3 5 8  
+      2 1 3  
+            ┘
 	```
 
 	1. Using `mat`, define `stack`
 
-	```APL
-	      stack
+	```BQN
+	   stack
 	```
 	```
-	3 5 8
-	3 5 8
-	2 1 3
-	2 1 3
+    ┌─       
+    ╵ 3 5 8  
+      2 1 3  
+      3 5 8  
+      2 1 3  
+            ┘
+	```
+
+	1. Using `mat`, define `wide`
+
+	```BQN
+	   wide
+	```
+	```
+    ┌─             
+    ╵ 3 5 8 3 5 8  
+      2 1 3 2 1 3  
+                  ┘
 	```
 
 	???Example "Answers"
 		<ol type="a">
 		<li>
-		```APL
-		mat ← 2 3⍴nums
+		```BQN
+		   mat ← 2‿3⥊nums
+		```
+		</li>
+		<li>
+		```BQN
+		   stack ← 2/mat
 		```
 		</li>
 		<li>
 		```APL
-		wide ← mat,mat
-		```
-		</li>
-		<li>
-		```APL
-		stack ← 2⌿mat
+		   wide ← mat(∾⎉1)mat
 		```
 		</li>
 		</ol>
 
-1. Why does `101='101'` evaluate to a 3-element list?
+1. Why does `101="101"` evaluate to a 3-element list?
 
 	???Example "Answer"
-		`101` is a literal single number (a scalar), whereas `'101'` is a literal 3-element character vector.
+		`101` is a literal single number (a scalar), whereas `"101"` is a literal 3-element character vector.
 		
-		Due to [singleton extension](./basic-syntax-and-arithmetic.md#singleton-extension), `101='101'` compares the single number `101` to each of the 3 characters in the 3-element character vector `'101'`.	The character vector `'101'` is equivalent to `'1' '0' '1'` but the number `101` is not the same as the 3-element numeric vector `1 0 1`.
+		Due to [singleton extension](./basic-syntax-and-arithmetic.md#singleton-extension), `101="101"` compares the single number `101` to each of the 3 characters in the 3-element character vector `"101"`.	The character vector `"101"` is equivalent to `'1'‿'0'‿'1'` but the number `101` is not the same as the 3-element numeric vector `1‿0‿1`.
 
 1. Write a function `PassFail` which takes an array of scores and returns an array of the same shape in which `F` corresponds to a score less than 40 and `P` corresponds to a score of 40 or more.
 
-	```APL
-	      PassFail 35 40 45
+	```BQN
+	   PassFail 35‿40‿45
 	```
 	```
-	FPP
+	"FPP"
 	```
 	---
-	```APL
-	      PassFail 2 5⍴89 77 15 49 72 54 25 18 57 53
+	```BQN
+	   PassFail 2‿5⥊89‿77‿15‿49‿72‿54‿25‿18‿57‿53
 	```
 	```
-	PPFPP
-	PFFPP
+    ┌─       
+    ╵"PPFPP  
+      PFFPP" 
+            ┘
 	```
 
 	???Example "Answer"
-		```APL
-		PassFail ← {'FP'[1+40≤⍵]}
+		```BQN
+		   PassFail ← {(𝕩≥40)⊏"FP"}
 		```
 
 1. This problem is taken from the [2019 APL Problem Solving Competition](https://www.dyalog.com/student-competition.htm).
 
 	A Grille is a square sheet with holes cut out of it which, when laid on top of a similarly-sized character matrix, reveals a hidden message.
 
-	![The application of a grille to a character grid](./img/Grille.png)
+	![The application of a grille to a character grid](../img/Grille.png)
 
-	Write an APL function `Grille` which:
+	Write a BQN function `DecodeGrille` which:
 
 	- takes a character matrix left argument where a hash `'#'` represents opaque material and a space `' '` represents a hole.
 	- takes a character matrix of the same shape as right argument
 	- returns the hidden message as a character vector
 
-	```APL
-	      (2 2⍴'# # ') Grille 2 2⍴'LHOI'
+	```BQN
+	   (2‿2⥊"# # ") DecodeGrille 2‿2⥊"LHOI"
 	```
 	```
-	HI
-	```
-	---
-	```APL
-	      grid   ← 5 5⍴'VRYIALCLQIFKNEVPLARKMPLFF'
-		  grille ← 5 5⍴'⌺⌺⌺ ⌺ ⌺⌺⌺ ⌺ ⌺ ⌺⌺⌺ ⌺⌺⌺  ⌺⌺'
-		  grid grille
-	```
-	```
-	┌─────┬─────┐
-	│VRYIA│⌺⌺⌺ ⌺│
-	│LCLQI│ ⌺⌺⌺ │
-	│FKNEV│⌺ ⌺ ⌺│
-	│PLARK│⌺⌺ ⌺⌺│
-	│MPLFF│⌺  ⌺⌺│
-	└─────┴─────┘
+	"HI"
 	```
 	---
-	```APL
-		  grille Grille grid
+	```BQN
+	   grid   ← 5‿5⥊"VRYIALCLQIFKNEVPLBRKMQNFF"
+	   grille ← 5‿5⥊"⌺⌺⌺ ⌺ ⌺⌺⌺ ⌺ ⌺ ⌺⌺⌺ ⌺⌺⌺  ⌺⌺"
+	   grid ⋈ grille
 	```
 	```
-	ILIKEAPL
+    ┌─                     
+    · ┌─        ┌─         
+      ╵"VRYIA   ╵"⌺⌺⌺ ⌺    
+        LCLQI      ⌺⌺⌺     
+        FKNEV     ⌺ ⌺ ⌺    
+        PLBRK     ⌺⌺ ⌺⌺    
+        MQNFF"    ⌺  ⌺⌺"   
+              ┘         ┘  
+                          ┘
+	```
+	---
+	```BQN
+	   grille DecodeGrille grid
+	```
+	```
+	"ILIKEBQN"
 	```
 
 	???Example "Answer"
 
-		We can use the **where** function `⍸⍵` to compute indices of spaces:
+		We can take an approach that uses **Select** `𝕨⊏𝕩` or an approach that uses **Group** `𝕨⊔𝕩`.
 
-		```APL
-		Grille ← {⍵[⍸⍺=' ']}
+		The Select function `⊏` supports its left argument being a boolean mask, but requires that mask to be a rank-1 array. This means we have to deshape both of our arrays before selecting:
+
+		```BQN
+		   DecodeGrille ← {(' '=⥊𝕨)/⥊𝕩}
 		```
 
-		Or, we can use **compress** `⍺/⍵` if we first ravel `,⍵` both arguments:
+		Here are two ways to read the above in English:
+		
+		"Replicate items in the deshaped right argument according to the indices of space characters in the left argument."
+		
+		"Keep items from the flattened right argument at the same indices where the flattened left argument has space characters."
 
-		```APL
-		Grille ← {(,⍺=' ')/,⍵}
+		Alternatively, we can create a boolean mask of the same shape as the original grille and use that as the left argument to Group `⊔`. The Group function will then bucket items from its right argument (our grid) according to whether the left argument has a `0` or a `1` at that same spot.
+
+		```BQN
+		Grille ← {1⊑(grille=' ')⊔grid}
 		```
 
-1. Back to School
+		Group returns an array of its groupings. We therefore have to grab the one-th item, because "indices that match a space" will have a value of `1` in the left argument, and thus values from the right argument at those spots will be grouped under index `1`.
+
+		In English: "Take the one-th value from the grouping of items in the right argument at indices where the left argument has space characters."
+
+
+2. Back to School
 	1. Write a function to produce the multiplication table from `1` to `⍵`. 
 
 		<pre><code class="language-APL">      MulTable 7</code></pre>
-		<pre><code class="language-APL">1  2  3  4  5  6  7
+		<pre><code class="language-APL">
+		1  2  3  4  5  6  7
 		2  4  6  8 10 12 14
 		3  6  9 12 15 18 21
 		4  8 12 16 20 24 28
@@ -560,7 +587,7 @@ APL
 		6 12 18 24 30 36 42
 		7 14 21 28 35 42 49</code></pre>
 
-	1. Write a function to produce the addition table from `0` to `⍵`.
+	2. Write a function to produce the addition table from `0` to `⍵`.
 
 		<pre><code class="language-APL">      AddTable 6</code></pre>
 		<pre><code class="language-APL">0 1 2 3  4  5  6
@@ -605,7 +632,7 @@ APL
 		</li>
 		</ol>
 
-1. Making the Grade
+3. Making the Grade
 
 	<table id="gradeBoundaryTable" style="border-top: none;">
 	<tbody>
@@ -646,7 +673,7 @@ APL
 		{'ABCDF'[+⌿64 69 79 89 100∘.≥⍵]}
 		```
 
-1. Analysing text
+4. Analysing text
 
 	1. Write a function test if there are any vowels `'aeiou'` in text vector `⍵`
 
@@ -657,7 +684,7 @@ APL
 		0
 		```
 
-	1. Write a function to count the number of vowels in its character vector argument `⍵`
+	2. Write a function to count the number of vowels in its character vector argument `⍵`
 
 		```APL
 		      CountVowels 'this text is made of characters'
@@ -673,7 +700,7 @@ APL
 		12
 		```
 
-	1. Write a function to remove the vowels from its argument
+	3. Write a function to remove the vowels from its argument
 
 		```APL
 		      RemoveVowels 'this text is made of characters'
@@ -735,7 +762,7 @@ APL
 
 		</li>
 
-1. Matching shapes
+5. Matching shapes
 	1. 
 		Write a function to add a vector `⍵` to each row of a matrix `⍺`:
 
@@ -752,7 +779,7 @@ APL
 		6   20  115
 		```
 
-	1. Write a function to add a vector to each row of a matrix, regardless of the order in which they are supplied:
+	2. Write a function to add a vector to each row of a matrix, regardless of the order in which they are supplied:
 
 		```APL
 		      1 9 AddRows 3 2⍴1 100
@@ -786,7 +813,7 @@ APL
 		</li>
 		</ol>
 
-1. These are the heights of some students in 3 classes.
+6. These are the heights of some students in 3 classes.
 	```APL
 	student ← 10 7⍴'Kane   Jonah  JessicaPadma  Katie  CharlieAmil   David  Zara   Filipa '
 	class ← 'CBACCCBBAB'
@@ -796,9 +823,9 @@ APL
 	Use APL to:
 
 	1. Find the height of the tallest student
-	1. Find the name of the tallest student
-	1. Find the class to which the tallest student belongs  
-	1. Find the average height of students in class `B`
+	2. Find the name of the tallest student
+	3. Find the class to which the tallest student belongs  
+	4. Find the average height of students in class `B`
 	
 	???Example "Answers"
 		<ol type="a">
@@ -843,7 +870,7 @@ APL
 		</li>
 		</ol>
 
-1. Optimus Prime
+7. Optimus Prime
 
 	A prime number is a positive whole number greater than $1$ which can be divided only by itself and $1$ with no remainder.
 
