@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+type pipenv || echo "[ERROR] pipenv executable not found"
+
+pipenv install
+pipenv run mkdocs serve
