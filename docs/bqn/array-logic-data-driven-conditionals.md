@@ -266,7 +266,7 @@ ABCDEFGHI
 ```
 
 ## The table modifier
-The <dfn>table</dfn> modifier `⌜` applies its function operand `𝔽` between all combinations of elements of its left and right argument arrays. 
+The <dfn>table</dfn> modifier `⌜` applies its function operand `𝔽` between all combinations of elements of its left and right argument arrays. Quoting [BQN's documentation](https://mlochbaum.github.io/BQN/doc/map.html#table), table is "like a structure-preserving and function-applying [Cartesian](https://en.wikipedia.org/wiki/Cartesian_product) product," and is similar to APL's outer product.
 
 ```BQN
    F ← {𝕨+𝕩}
@@ -280,7 +280,7 @@ The <dfn>table</dfn> modifier `⌜` applies its function operand `𝔽` between 
            ┘
 ```
 
-For example, the join function `∾`  will join two lists together. We can use the outer product to join combinations of words from two lists. 
+For example, the join function `∾`  will join two lists together. We can use the table modifier to join combinations of words from two lists. 
 
 ```BQN
    1 4 9 , 6 5 4
@@ -393,7 +393,7 @@ BQN
 ⟨ 0 3 5 ⟩
 ```
 ---
-```APL
+```BQN
    IsDivisibleBy ← {0=𝕩|𝕨}
    3‿6‿8‿5‿2 IsDivisibleBy 2
 ```
@@ -467,7 +467,7 @@ BQN
 		```
 		</li>
 		<li>
-		```APL
+		```BQN
 		   wide ← mat(∾⎉1)mat
 		```
 		</li>
@@ -575,47 +575,49 @@ BQN
 
 
 2. Back to School
-	1. Write a function to produce the multiplication table from `1` to `⍵`. 
+	1. Write a function to produce the multiplication table from `1` to `𝕩`. 
 
-		<pre><code class="language-APL">      MulTable 7</code></pre>
-		<pre><code class="language-APL">
-		1  2  3  4  5  6  7
-		2  4  6  8 10 12 14
-		3  6  9 12 15 18 21
-		4  8 12 16 20 24 28
-		5 10 15 20 25 30 35
-		6 12 18 24 30 36 42
-		7 14 21 28 35 42 49</code></pre>
+		<pre><code class="language-BQN">      MulTable 7</code></pre>
+		<pre><code class="language-BQN">┌─                     
+ 		╵ 1  2  3  4  5  6  7  
+ 		  2  4  6  8 10 12 14  
+ 		  3  6  9 12 15 18 21  
+ 		  4  8 12 16 20 24 28  
+ 		  5 10 15 20 25 30 35  
+ 		  6 12 18 24 30 36 42  
+ 		  7 14 21 28 35 42 49  
+ 		                      ┘</code></pre>
 
-	2. Write a function to produce the addition table from `0` to `⍵`.
+	2. Write a function to produce the addition table from `0` to `𝕩`.
 
-		<pre><code class="language-APL">      AddTable 6</code></pre>
-		<pre><code class="language-APL">0 1 2 3  4  5  6
-		1 2 3 4  5  6  7
-		2 3 4 5  6  7  8
-		3 4 5 6  7  8  9
-		4 5 6 7  8  9 10
-		5 6 7 8  9 10 11
-		6 7 8 9 10 11 12</code></pre>
+		<pre><code class="language-BQN">      AddTable 6</code></pre>
+		<pre><code class="language-BQN">┌─              
+		╵ 0 1 2 3 4  5  
+		  1 2 3 4 5  6  
+		  2 3 4 5 6  7  
+		  3 4 5 6 7  8  
+		  4 5 6 7 8  9  
+		  5 6 7 8 9 10  
+		               ┘</code></pre>
 
 	???Example "Answers"
 		<ol type="a">
 		<li>
 
-		```APL
-		MulTable ← {(⍳⍵)∘.×⍳⍵}
+		```BQN
+		   MulTable ← {(1+↕𝕩)×⌜1+↕𝕩}
 		```
 
 		Avoid repeating yourself by assigning values to a name (`nums` in this example):
 
-		```APL
-		MulTable ← {nums ∘.× nums ← ⍳⍵}
+		```BQN
+		   MulTable ← {nums←1+↕𝕩 ⋄ nums×⌜nums}
 		```
 
-		Or, if left and right arguments to a dyadic function are the same, use a <dfn>selfie</dfn> `F⍨⍵`:
+		Or, if left and right arguments to a dyadic function are the same, use the modifier <dfn>Self</dfn> `F˜𝕩` which takes one argument `𝕩` and passes it as both the left and right arguments to the function `F` it modifies:
 
-		```APL
-		MulTable ← {∘.×⍨⍳⍵}
+		```BQN
+		   MulTable ← {×⌜˜1+↕𝕩}
 		```
 
 		</li>
@@ -623,10 +625,10 @@ BQN
 
 		Using the same three styles as described in part **(a)** above:
 
-		```APL
-		AddTable ← {(¯1+⍳1+⍵)∘.+¯1+⍳1+⍵}
-		AddTable ← {nums∘.+nums←¯1+⍳1+⍵}
-		AddTable ← {∘.+⍨¯1+⍳1+⍵}
+		```BQN
+           AddTable ← {(↕𝕩)+⌜↕𝕩}
+           AddTable ← {nums←↕𝕩 ⋄ nums+⌜nums}
+           AddTable ← {+⌜˜↕𝕩}
 		```
 
 		</li>
@@ -657,44 +659,43 @@ BQN
 
     Write a function that, given an array of integer test scores in the inclusive range 0 to 100, returns a list of letter grades according to the table above.
 
-	<pre><code class="language-APL">      Grade 0 10 75 78 85</code></pre>
-	<pre><code class="language-APL">FFCCB</code></pre>
+	<pre><code class="language-BQN">   Grade 0‿10‿75‿78‿85</code></pre>
+	<pre><code class="language-BQN">"FFCCB"</code></pre>
 
 	???Example "Answer"
-		Use an outer product to compare between lower bounds and the scores. The column-wise sum then tells us which "bin" each score belongs to:
+		Use the table modifier to compare all combinations of the lower bounds and the scores. The column-wise sum then tells us which "bin" each score belongs to:
 
-		```APL
-		Grade ← {'FDCBA'[+⌿0 65 70 80 90∘.≤⍵]}
+		```BQN
+		Grade ← {(1-˜+˝0‿65‿70‿80‿90≤⌜𝕩)⊏"FDCBA"}
 		```
 
-		You can use a different comparison if you choose to use upper bounds:
+		Remembering that comparisons like `≤` return either `0` or `1`, this can be read in English as: Select the characters from `"FDCBA"` at the indices calculated by subtracting 1 from the column-wise sums of the comparison of the lowest-acceptable scores for each letter grade to the actual score.
 
-		```APL
-		{'ABCDF'[+⌿64 69 79 89 100∘.≥⍵]}
-		```
+		In the above solution, we've used the swap modifier `˜` with `-` to avoid parentheses. We can get rid of all parenthese with one more: `Grade ← {"FDCBA"⊏˜1-˜+˝0‿65‿70‿80‿90≤⌜𝕩}`
+
 
 4. Analysing text
 
 	1. Write a function test if there are any vowels `'aeiou'` in text vector `⍵`
 
-		```APL
-		      AnyVowels 'this text is made of characters'
+		```BQN
+		   AnyVowels "this text is made of characters"
 		1
-		      AnyVowels 'bgxkz'
+		   AnyVowels "bgxkz"
 		0
 		```
 
 	2. Write a function to count the number of vowels in its character vector argument `⍵`
 
-		```APL
-		      CountVowels 'this text is made of characters'
+		```BQN
+		      CountVowels "this text is made of characters"
 		```
 		```
 		9
 		```
 		---
-		```APL
-		      CountVowels 'we have twelve vowels in this sentence'
+		```BQN
+		      CountVowels "we have twelve vowels in this sentence"
 		```
 		```
 		12
@@ -702,12 +703,13 @@ BQN
 
 	3. Write a function to remove the vowels from its argument
 
-		```APL
-		      RemoveVowels 'this text is made of characters'
-		ths txt s md f chrctrs
+		```BQN
+		      RemoveVowels "this text is made of characters"
+		"ths txt s md f chrctrs"
 		```
 
 	???Example "Answers"
+	    TODO Consider whether this tabling is helpful, or just use membership.
 		<ol type="a">
 		<li>
 		With two *or-reductions*, we ask "are there any `1`s in each row?" Then, "are there any `1`s in any of the rows?"
