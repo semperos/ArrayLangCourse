@@ -2,12 +2,21 @@
 	font-family: APL;
 	src: local("APL385 Unicode"), url("../assets/apl385.ttf");
 }
+@font-face {
+	font-family: BQN;
+	/* src: url("../assets/DejaVuBQNSansMono.ttf"); */
+	src: url("../assets/BQN386.ttf");
+}
 .language-APL {
 	font-family: APL!important;
 	line-height: 1.2em!important;
 }
+.language-BQN {
+	font-family: BQN!important;
+	line-height: 1.2em!important;
+}
 code {
-	font-family: APL;
+	font-family: BQN;
 	font-size: 1.03em!important;
 }
 .glyph {
