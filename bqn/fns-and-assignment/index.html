@@ -1,0 +1,1156 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A guided introduction to array programming languages">
+      
+      
+      
+        <link rel="canonical" href="https://semperos.github.io/ArrayLangCourse/bqn/fns-and-assignment/">
+      
+      
+        <link rel="prev" href="../basic-syntax-and-arithmetic/">
+      
+      
+        <link rel="next" href="../array-logic-data-driven-conditionals/">
+      
+      <link rel="icon" href="../../img/favicon-32.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.3">
+    
+    
+      
+        <title>Functions and Assignment - Array Languages Course</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6b71719e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../style/main.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-orange">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#functions-and-assignment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Array Languages Course" class="md-header__button md-logo" aria-label="Array Languages Course" data-md-component="logo">
+      
+  <img src="../../img/alc-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Array Languages Course
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Functions and Assignment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Array Languages Course" class="md-nav__button md-logo" aria-label="Array Languages Course" data-md-component="logo">
+      
+  <img src="../../img/alc-logo.png" alt="logo">
+
+    </a>
+    Array Languages Course
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Dyalog APL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dyalog APL" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Dyalog APL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/basic-syntax-and-arithmetic/" class="md-nav__link">
+        Basic syntax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/dfns-and-assignment/" class="md-nav__link">
+        Dfns and Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/array-logic-data-driven-conditionals/" class="md-nav__link">
+        Array Logic and Data-driven Conditionals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/multidimensional-and-nested-arrays/" class="md-nav__link">
+        Multidimensional and Nested Arrays
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/cells-and-axes/" class="md-nav__link">
+        Cells and Axes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/finding-and-replacing-values/" class="md-nav__link">
+        Finding and Replacing Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/selecting-from-arrays/" class="md-nav__link">
+        Selecting from Arrays
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/broken-keyboard-problems/" class="md-nav__link">
+        Broken Keyboard Problems
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/loops-and-recursion/" class="md-nav__link">
+        Loops and Recursion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Assignment/" class="md-nav__link">
+        Extra Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Workspaces/" class="md-nav__link">
+        Workspace Basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Namespaces/" class="md-nav__link">
+        Namespaces and Other Objects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Help/" class="md-nav__link">
+        Getting Help
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/user-defined-functions/" class="md-nav__link">
+        User-defined Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Operators/" class="md-nav__link">
+        Operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Quad%20names/" class="md-nav__link">
+        Quad Names
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/error-handling-and-debugging/" class="md-nav__link">
+        Error Handling and Debugging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Data/" class="md-nav__link">
+        Data IO
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Code/" class="md-nav__link">
+        Code IO
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Interfaces/" class="md-nav__link">
+        External Interfaces
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Quirks/" class="md-nav__link">
+        Historical Quirks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Interpreter-internals/" class="md-nav__link">
+        Interpreter Internals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dyalog/Reading/" class="md-nav__link">
+        Further Reading
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="true">
+          BQN
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="BQN" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          BQN
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basic-syntax-and-arithmetic/" class="md-nav__link">
+        Basic syntax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Functions and Assignment
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Functions and Assignment
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assignment" class="md-nav__link">
+    Assignment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutating-variables" class="md-nav__link">
+    Mutating Variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiline-functions" class="md-nav__link">
+    Multiline functions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-set-2" class="md-nav__link">
+    Problem set 2
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../array-logic-data-driven-conditionals/" class="md-nav__link">
+        Array Logic and Data-driven Conditionals
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" tabindex="0" aria-expanded="false">
+          J
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="J" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          J
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../j/basic-syntax-and-arithmetic/" class="md-nav__link">
+        Basic syntax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../j/verbs-and-assignment/" class="md-nav__link">
+        Verbs and Assignment
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" tabindex="0" aria-expanded="false">
+          K
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="K" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          K
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../k/basic-syntax-and-arithmetic/" class="md-nav__link">
+        Basic syntax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../k/verbs-and-assignment/" class="md-nav__link">
+        Verbs and Assignment
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assignment" class="md-nav__link">
+    Assignment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutating-variables" class="md-nav__link">
+    Mutating Variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiline-functions" class="md-nav__link">
+    Multiline functions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-set-2" class="md-nav__link">
+    Problem set 2
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="functions-and-assignment">Functions and Assignment</h1>
+<details class="info">
+<summary>Before diving in</summary>
+<p>At this point, you should work through <a href="https://mlochbaum.github.io/BQN/tutorial/expression.html">Tutorial: BQN expressions</a> to get a general, BQN-focused introduction.</p>
+<p>As part of that, reviewing <a href="https://mlochbaum.github.io/BQN/doc/expression.html">Expression syntax</a> and <a href="https://mlochbaum.github.io/BQN/doc/types.html">Types</a> would also serve you well, paying attention to sections about Roles in BQN.</p>
+</details>
+<h2 id="functions">Functions</h2>
+<p>A <dfn>function</dfn> is an operation that takes one or two subject arguments. The left argument is called <code>𝕨</code> and the right argument <code>𝕩</code>.</p>
+<p>You can define your own explicit functions using block syntax:</p>
+<p><pre class="highlight"><code class="language-BQN">      3{𝕨}5      # 𝕨 is the (optional) left argument</code></pre>
+<pre class="highlight"><code>3</code></pre></p>
+<hr />
+<p><pre class="highlight"><code class="language-BQN">      {𝕩}"apl"   # 𝕩 is the right argument</code></pre>
+<pre class="highlight"><code>"apl"</code></pre></p>
+<hr />
+<p><pre class="highlight"><code class="language-BQN">      {𝕨}5       # Calling a dyadic function monadically results in an error</code></pre>
+<pre class="highlight"><code>Error: Left argument required
+
+{𝕨}5
+^^^</code></pre></p>
+<hr />
+<p><pre class="highlight"><code class="language-BQN">      3{𝕩}       # Calling a function without a right argument results in an error</code></pre>
+<pre class="highlight"><code>Error: Second-level parts of a train must be functions
+
+3{𝕩}
+^</code></pre></p>
+<p>From here, when functions are first introduced, <code>Fn 𝕩</code> denotes a monadic function <code>Fn</code> and <code>𝕨 Fn 𝕩</code> denotes a dyadic function.</p>
+<h2 id="assignment">Assignment</h2>
+<p>Names are assigned with the left arrow <code>name ← expression</code>. We say "name gets [function or array]".</p>
+<p><pre class="highlight"><code class="language-BQN">      one←1
+      three←3
+      Equals←=
+      Plus←+
+      four←4
+      four Equals one Plus three  # 1 means true, 0 means false</code></pre>
+<pre class="highlight"><code>1</code></pre></p>
+<p>Note that the <dfn>role</dfn> of both sides of an assignment must match. If you try to assign <code>Equals</code> as <code>equals</code>, you get the following error:</p>
+<p><pre class="highlight"><code class="language-BQN">equals←=</code></pre>
+<pre class="highlight"><code>Error: Role of the two sides in assignment must match
+
+equals←=
+^^^^^^</code></pre></p>
+<p><em>Consult the resources in <strong>Before diving in</strong> above if the term "role" or this error doesn't make sense.</em></p>
+<p>We can use a name in the same line in which it is defined. In production code it is best to avoid this unless an expression is very short.</p>
+<p>Read the following as "squared numbers divided by the sum of squares":
+<pre class="highlight"><code class="language-APL">      squared÷+´squared←¯1‿0‿1‿2⋆2</code></pre>
+<pre class="highlight"><code>⟨ 0.16666666666666666 0 0.16666666666666666 0.6666666666666666 ⟩</code></pre></p>
+<h2 id="mutating-variables">Mutating Variables</h2>
+<p>You may come across the following error:</p>
+<p><pre class="highlight"><code class="language-BQN">      Count ← {+´𝕩}
+      count ← {+´𝕩} 1‿0‿0‿1‿0‿1‿0</code></pre>
+<pre class="highlight"><code>Error: Redefinition
+
+      count ← {+´𝕩} 1‿0‿0‿1‿0‿1‿0
+      ^^^^^</code></pre></p>
+<p>BQN does not permit reassigning a variable within the same scope.  You can, however, mutate an already-defined variable using <code>↩</code>.</p>
+<p><pre class="highlight"><code class="language-BQN">      a ← 4</code></pre>
+<pre class="highlight"><code>4</code></pre></p>
+<hr />
+<p><pre class="highlight"><code class="language-BQN">      a √↩     # a is now the square root of its previous value</code></pre>
+<pre class="highlight"><code>2</code></pre></p>
+<hr />
+<p><pre class="highlight"><code class="language-BQN">      a ⋆↩ 3   # a is now its previous value cubed</code></pre>
+<pre class="highlight"><code>8</code></pre></p>
+<p>These expressions expand as found in <a href="https://mlochbaum.github.io/BQN/doc/expression.html#assignment">BQN's online documentation</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code><span class="Value">a</span> <span class="Function">F</span><span class="Gets">↩</span></code></td>
+<td><code><span class="Value">a</span> <span class="Gets">↩</span> <span class="Function">F</span> <span class="Value">a</span></code></td>
+</tr>
+<tr>
+<td><code><span class="Value">a</span> <span class="Function">F</span><span class="Gets">↩</span> <span class="Value">b</span></code></td>
+<td><code><span class="Value">a</span> <span class="Gets">↩</span> <span class="Value">a</span> <span class="Function">F</span> <span class="Value">b</span></code></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="multiline-functions">Multiline functions</h2>
+<p>You can do quite a lot in a single line of BQN. However, it is not long before you want to keep sequences of multiple statements available for re-use. Of course we can write functions which consist of multiple statements.</p>
+<p>The <dfn>statement separator</dfn>, <code>⋄</code> (diamond), allows us to write multiple APL statements in a single line. Some people think that it is more readable to spread multiple statements across multiple lines of a function. However, it is worth being aware that BQN diamonds <code>⋄</code> are equivalent to newline characters in terms of execution. The following two definitions of the <code>Mean</code> function are equivalent.</p>
+<pre class="highlight"><code class="language-BQN"> Mean ← {
+    sum ← +´𝕩
+    count ← ≢𝕩
+    sum ÷ count
+ }
+
+ Mean ← { sum ← +´𝕩 ⋄ count ← ≢𝕩 ⋄ sum ÷ count }</code></pre>
+<p>Separate statements are executed from left to right and top to bottom.</p>
+<h2 id="problem-set-2">Problem set 2</h2>
+<p>The following problems can be solved with single-line functions.</p>
+<ol>
+<li>
+<p>Eggs</p>
+<p>A recipe serving 4 people uses 3 eggs. Write the function <code>Eggs</code> which computes the number of eggs which need cracking to serve <code>⍵</code> people. Using a fraction of an egg requires that a whole egg be cracked.</p>
+<p><pre class="highlight"><code class="language-BQN">      Eggs 4</code></pre>
+<pre class="highlight"><code>3</code></pre></p>
+<hr />
+<p><pre class="highlight"><code class="language-BQN">      Eggs 100</code></pre>
+<pre class="highlight"><code>75</code></pre></p>
+<hr />
+<p><pre class="highlight"><code class="language-BQN">      Eggs 1+↕12</code></pre>
+<pre class="highlight"><code>1 2 3 3 4 5 6 6 7 8 9 9</code></pre></p>
+<details class="example">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-BQN">Eggs ← {⌈𝕩×3÷4}</code></pre>
+</details>
+</li>
+<li>
+<p>Write a function <code>To</code> which returns integers from <code>𝕨</code> to <code>𝕩</code> inclusive.</p>
+<pre class="highlight"><code class="language-BQN">      3 To 3
+3
+      3 To 4
+⟨ 3 4 ⟩
+      1 To 7
+⟨ 1 2 3 4 5 6 7 ⟩
+      ¯3 To 5
+⟨ ¯3 ¯2 ¯1 0 1 2 3 4 5 ⟩</code></pre>
+<p><strong>BONUS:</strong> What if <code>𝕨&gt;𝕩</code>?<br />
+<pre class="highlight"><code class="language-BQN">      3 To 5
+⟨ 3 4 5 ⟩
+      5 To 3
+⟨ 5 4 3 ⟩
+      5 To ¯2
+⟨ 5 4 3 2 1 0 ¯1 ¯2 ⟩</code></pre></p>
+<details class="example">
+<summary>Answer</summary>
+<p>In the simple case, make sure to generate enough numbers and use <code>𝕨</code> as an offset:<br />
+<pre class="highlight"><code class="language-APL">To ← {𝕨+↕1+𝕩-𝕨}</code></pre>
+In general we take into account whether the difference is positive or negative:<br />
+<pre class="highlight"><code class="language-APL">To ← {𝕨+(×d)×↕1+|d←𝕩-𝕨}</code></pre></p>
+</details>
+</li>
+<li>
+<p>The formula to convert temperature from Celsius (<span class="arithmatex">\(T_C\)</span>) to Fahrenheit (<span class="arithmatex">\(T_F\)</span>) in traditional mathematical notation is as follows:</p>
+<div class="arithmatex">\[T_F = {32 + {{9}\over{5}}\times {T_C}}\]</div>
+<p>Write the function <code>CtoF</code> to convert temperatures from Celcius to Farenheit.<br />
+<pre class="highlight"><code class="language-BQN">      CtoF 11.3‿23‿0‿16‿¯10‿38
+⟨ 52.34 73.4 32 60.8 14 100.4 ⟩</code></pre></p>
+<details class="example">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-BQN">CtoF ← {32+⍵×9÷5}</code></pre>
+</details>
+</li>
+<li>
+<p>Prime Time</p>
+<p>A prime number is a positive whole number greater than <span class="arithmatex">\(1\)</span> which can be divided only by itself and <span class="arithmatex">\(1\)</span> with no remainder.</p>
+<p>Write a function which returns <code>1</code> if its argument is prime and <code>0</code> otherwise.</p>
+<pre class="highlight"><code>          IsPrime 21
+0
+          IsPrime 17
+1
+</code></pre>
+<details class="example">
+<summary>Answer</summary>
+<p>There are several ways to code this, but the basic method is to count the number of divisors.
+<pre class="highlight"><code class="language-BQN">IsPrime ← {2=+´d=⌊d←𝕩÷1+↕𝕩}
+IsPrime ← {2=+´0=(1+↕𝕩)|𝕩}</code></pre></p>
+</details>
+</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/semperos/ArrayLangCourse" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg>
+    </a>
+  
+    
+    
+      
+      
+    
+    <a href="https://danielgregoire.dev" target="_blank" rel="noopener" title="danielgregoire.dev" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8v2m9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1 0 1.71-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5Z"/></svg>
+    </a>
+  
+    
+    
+      
+      
+    
+    <a href="https://fosstodon.org/@semperos" target="_blank" rel="noopener" title="fosstodon.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 15.5a.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5v-7c0-1.93-2.07-3.5-4-3.5H6a4 4 0 0 0-4 4v10h4v-4h5v4h4v-4.5a.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5V16a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-2h-2.5v1.5Z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant"], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ba449ae6.min.js"></script>
+      
+        <script src="../../javascripts/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
